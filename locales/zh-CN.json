@@ -83,6 +83,7 @@
   "Create User Text 1": "请输入第一个用户的用户名和密码",
   "Create User Text 2": "该用户会成为系统权限最高的管理员",
   "Confirm": "确定",
+  "Processing":"处理中",
   "Searching Device Text": "正在搜索网络上的WISNUC OS设备",
   "Login via LAN": "局域网登录",
   "Searching Device": "搜索设备中...",

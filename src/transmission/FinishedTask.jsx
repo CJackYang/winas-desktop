@@ -89,8 +89,9 @@ class FinishedTask extends Component {
 
         {/* task item type */}
         <div style={{ width: 24, marginRight: 16 }}>
-          { task.entries.length > 1 ? <MultiSvg style={svgStyle} /> : task.taskType === 'file' ? <FileSvg style={svgStyle} />
-            : <FolderSvg style={Object.assign({ fill: '#f9a825' }, svgStyle)} /> }
+          { task.targetsCount > 1 ? <MultiSvg style={svgStyle} />
+            : task.taskType === 'file' ? <FileSvg style={svgStyle} />
+              : <FolderSvg style={Object.assign({ fill: '#f9a825' }, svgStyle)} /> }
         </div>
 
         {/* task item name */}
@@ -106,7 +107,7 @@ class FinishedTask extends Component {
             { task.name }
           </div>
           <div>
-            { task.entries.length > 1 && i18n.__('And Other %s Items', task.entries.length)}
+            { task.targetsCount > 1 && i18n.__('And Other %s Items', task.targetsCount)}
           </div>
         </div>
 

@@ -156,7 +156,11 @@ class DownloadDialog extends React.PureComponent {
                 <div style={{ flexGrow: 1 }} />
                 <RSButton label={i18n.__('Cancel')} onClick={onCancel} alt />
                 <div style={{ width: 10 }} />
-                <RSButton label={i18n.__('Confirm')} onClick={this.onFire} disabled={this.state.fired} />
+                <RSButton
+                  onClick={this.onFire}
+                  disabled={this.state.fired}
+                  label={this.state.fired ? i18n.__('Processing') : i18n.__('Confirm')}
+                />
               </div>
             </div>
           )
