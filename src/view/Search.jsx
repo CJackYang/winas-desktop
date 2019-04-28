@@ -31,7 +31,6 @@ class Search extends Home {
   }
 
   navEnter () {
-    console.log('navEnter Search', this.state, this.props)
     const path = [{ name: i18n.__('Search'), uuid: 'fake-UUID-in-Search', type: 'search' }]
     this.setState({ showSearch: true, path })
   }
@@ -41,7 +40,6 @@ class Search extends Home {
   }
 
   search (name, types) {
-    console.log('search', name, types)
     this.name = name
     this.types = types
 
@@ -58,7 +56,7 @@ class Search extends Home {
       this.ctx.props.openSnackBar(i18n.__('Search Failed'))
       return
     }
-    console.log('search', apis)
+
     const places = drives.map(d => d.uuid).join('.')
     const order = types && types.length ? 'newest' : 'find'
     const typesString = Array.isArray(types) && types.map((t) => {
@@ -85,8 +83,10 @@ class Search extends Home {
     this.ctx.props.apis.pureRequest('search', { name, places, order, types: typesString }, (err, res) => {
       if (err || !res || !Array.isArray(res)) this.setState({ error: err, loading: false })
       else {
-        const pdrives = places.split('.')
+        // not current search result
+        if (this.name !== name || this.types !== types) return
 
+        const pdrives = places.split('.')
         let entries = res.map((l) => {
           const pdrv = pdrives[l.place]
           const drive = drives.find(d => d.uuid === pdrv)
@@ -104,8 +104,6 @@ class Search extends Home {
         // sort entries
         entries.sort((a, b) => sortByType(a, b, this.state.sortType))
 
-        console.log('entries', entries)
-
         this.setState({ entries, loading: false })
       }
     })
@@ -115,7 +113,7 @@ class Search extends Home {
   rearrange (entries) {
     // sort by pdir and otimeDown
     const sorted = entries.filter(e => !e.deleted && !e.fingerprint)
-      .sort((a, b) => a.pdir.localeCompare(b) || sortByType(a, b, 'otimeDown'))
+      .sort((a, b) => a.pdir.localeCompare(b.pdir) || sortByType(a, b, 'otimeDown'))
 
     // map: pdir + name => files, acc: dirs
     const map = new Map()
