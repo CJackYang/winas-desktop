@@ -6,7 +6,7 @@ import { MenuItem } from 'material-ui'
 import Device from '../login/Device'
 import ScrollBar from '../common/ScrollBar'
 import { LIButton } from '../common/Buttons'
-import { CloseIcon, RefreshIcon } from '../common/Svg'
+import { CloseIcon, RefreshIcon, PublishIcon } from '../common/Svg'
 import CircularLoading from '../common/CircularLoading'
 
 class ChangeDevice extends React.Component {
@@ -45,7 +45,7 @@ class ChangeDevice extends React.Component {
     }
   }
 
-  async remoteLoginAsync (device) {
+  async remoteLoginAsync (device, forceCloud) {
     const { account } = this.props
     const args = { deviceSN: device.sn }
     const { token, cookie } = this.props.phi
@@ -62,17 +62,18 @@ class ChangeDevice extends React.Component {
     if (!LANToken || !user) throw Error('get LANToken or user error')
 
     Object.assign(user, { cookie })
-    return ({ dev: device, user, token: isLAN ? LANToken : token, isCloud: !isLAN })
+    return ({ dev: device, user, token: (isLAN && !forceCloud) ? LANToken : token, isCloud: forceCloud || !isLAN })
   }
 
   /**
    *  select device to login
    * @param {object} cdev device info from cloud
+   * @param {bool} forceCloud force connecting via cloud
    */
-  selectDevice (cdev) {
+  selectDevice (cdev, forceCloud) {
     console.log(cdev, this.props.phi)
     this.setState({ loggingDevice: cdev, list: [cdev], error: false })
-    this.remoteLoginAsync(cdev)
+    this.remoteLoginAsync(cdev, forceCloud)
       .then(({ dev, user, token, isCloud }) => {
         /* onSuccess: auto login */
         Object.assign(dev, {
@@ -147,6 +148,7 @@ class ChangeDevice extends React.Component {
       <div style={{ width: 450, height: 376, zIndex: 100, position: 'relative', backgroundColor: 'white' }} >
 
         <div style={{ height: 64, display: 'flex', alignItems: 'center' }}>
+          {/* close */}
           {
             !this.state.loggingDevice &&
             <LIButton style={{ marginLeft: 12 }} onClick={() => this.props.back(this.state.dev)}>
@@ -154,6 +156,14 @@ class ChangeDevice extends React.Component {
             </LIButton>
           }
           <div style={{ flex: 1 }} />
+          {/* force connecting via cloud */}
+          {
+            !this.state.loggingDevice &&
+            <LIButton style={{ marginRight: 12 }} onClick={() => this.selectDevice(this.props.selectedDevice, true)} >
+              <PublishIcon />
+            </LIButton>
+          }
+          {/* refresh */}
           {
             !this.state.loggingDevice &&
             <LIButton style={{ marginRight: 12 }} onClick={() => this.reqList()} >
