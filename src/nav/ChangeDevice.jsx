@@ -100,7 +100,7 @@ class ChangeDevice extends React.Component {
     const isCurrent = this.props.selectedDevice && this.props.selectedDevice.mdev.deviceSN === device.sn
     return (
       <div style={style} key={key}>
-        <div style={{ position: 'relative', opacity: isCurrent ? 0.7 : 1 }}>
+        <div style={{ position: 'relative' }}>
           <MenuItem onClick={() => this.selectDevice(device)} disabled={isCurrent || !!this.state.loggingDevice} >
             <Device {...this.props} cdev={device} slDevice={this.slDevice} />
           </MenuItem>
