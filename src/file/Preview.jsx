@@ -66,10 +66,12 @@ class Preview extends React.Component {
     }
 
     this.getRandomSrc = () => {
+      const { metadata, hash } = this.props.item
       this.session = UUID.v4()
-      this.props.apis.pureRequest('randomSrc', { hash: this.props.item.hash }, (error, data) => {
+      this.props.apis.pureRequest('randomSrc', { hash }, (error, data) => {
+        const ext = metadata && metadata.type && metadata.type.toLowerCase()
         if (error) console.error('randomSrc error', error)
-        else this.setState({ filePath: `http://${this.props.apis.address}:3000/media/${data.random}` })
+        else this.setState({ filePath: `http://${this.props.apis.address}:3000/media/${data.random}.${ext}` })
         this.session = ''
       })
     }
