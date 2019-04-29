@@ -9,8 +9,8 @@
     <meta name="keywords" content="null" />
     <meta name="description" content="null" />
   </head>
-  <body style="opacity: 0" id="root">
-    <div style="height: 100%; width: 100%; border: solid 1px #808080; background-color: #ffffff; box-sizing: border-box">
+  <body style="opacity: 0; overflow: hidden" id="root">
+    <div style="height: 298px; width: 242px; border: solid 1px #808080; background-color: #ffffff; box-sizing: border-box; overflow: hidden">
       <div style="height: 64px; display: flex; align-items: center;">
         <div style="width: 150px; height: 64px; margin-left: 24px">
           <div style="height: 16px; display: flex; align-items: center; margin-top: 16px; font-weight: 500">
@@ -20,7 +20,7 @@
             <span style="font-size: 12px; color: rgba(0,0,0,.54)" id="deviceStatus">设备连接正常</span>
           </div>
         </div>
-        <div style="width: 32px; height: 32px; margin-top: 16px, margin-left: 16px; border-radius: 16px; overflow: hidden">
+        <div style="width: 32px; height: 32px; margin-top: 16px; margin-left: 16px; border-radius: 16px; overflow: hidden">
           <img id="avatar" width="32" height="32" src="./assets/images/avatar-default.png" />
         </div>
       </div>
@@ -36,8 +36,8 @@
           </div>
           <div class="backup" id="backupWorking">
             <div>
+              <div class="backupText" id="speed"></div>
               <div class="backupText" id="bProgress"></div>
-              <div class="backupText" id="restTime"></div>
             </div>
           </div>
           <div class="backup" id="backupFinished">
@@ -159,18 +159,22 @@
         if (loading || !currentDrive) return
         loading = true
 
-        ipcReq('updateBackupDrive', { drive: currentDrive, attr: { disabled: !currentDrive.client.disabled }}, (err, res) => {
-          if (!err && res) {
-            if (res.client && res.client.disabled) {
-              disableToggle()
-            } else {
-              enableToggle()
+        ipcReq(
+          'updateBackupDrive',
+          { drive: currentDrive, attr: { disabled: !currentDrive.client.disabled }},
+          (err, res) => {
+            if (!err && res) {
+              if (res.client && res.client.disabled) {
+                disableToggle()
+              } else {
+                enableToggle()
+              }
             }
-          } 
-        })
+          }
+        )
       }
 
-      ipcRenderer.on('BACKUP_MSG', (event, { status, count, finishCount, restTime, lastBackupTime, drive, bProgress }) => {
+      ipcRenderer.on('BACKUP_MSG', (event, { status, count, finishCount, speed, lastBackupTime, drive, bProgress }) => {
         currentDrive = drive
         loading = false
         if (!drive || (status === 'Idle' && !drive.client.lastBackupTime)) {
@@ -187,10 +191,10 @@
           enableToggle()
 
           document.getElementById('backupFinished').style.display = 'flex'
-        } else if (status === 'running') {
+        } else if (status === 'Working') {
           hiddenAll()
           document.getElementById('bProgress').innerHTML = bProgress
-          document.getElementById('restTime').innerHTML = restTime
+          document.getElementById('speed').innerHTML = speed
           enableToggle()
 
           document.getElementById('backupWorking').style.display = 'flex'

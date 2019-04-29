@@ -223,6 +223,7 @@ class NavViews extends React.Component {
     ipcRenderer.on('conflicts', (e, args) => this.setState({ conflicts: args }))
     ipcRenderer.on('JUMP_TO', (e, nav) => this.jumpTo(nav))
     document.addEventListener('keydown', this.escListener)
+    ipcRenderer.on('CHANGE_DEVICE', this.onChangeDevice)
   }
 
   componentDidUpdate () {
@@ -248,6 +249,7 @@ class NavViews extends React.Component {
     ipcRenderer.removeAllListeners('snackbarMessage')
     ipcRenderer.removeAllListeners('conflicts')
     ipcRenderer.removeAllListeners('JUMP_TO')
+    ipcRenderer.removeAllListeners('CHANGE_DEVICE')
     document.removeEventListener('keydown', this.escListener)
   }
 

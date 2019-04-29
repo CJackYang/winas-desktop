@@ -49,10 +49,6 @@ class Winas extends React.Component {
     }
   }
 
-  componentDidMount () {
-    ipcRenderer.on('DEVICE_LOGOUT', () => this.deviceLogout())
-  }
-
   setPalette (primary1Color, accent1Color) {
     this.setState({
       theme: getMuiTheme({

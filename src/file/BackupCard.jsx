@@ -19,7 +19,7 @@ class BackupCard extends React.PureComponent {
       topDirs: [],
       status: 'Idle',
       loading: this.hasDrive,
-      speed: -1
+      speed: ''
     }
 
     this.handleClickAdd = (e, drive) => {
@@ -517,7 +517,7 @@ class BackupCard extends React.PureComponent {
             <div style={{ fontSize: 12, fontWeight: 500, color: '#FFF' }} key="Working">
               {/* backup speed */}
               <div style={{ fontSize: 18, height: 21, marginTop: 16, display: 'flex', alignItems: 'center' }}>
-                { i18n.__('%s Speed', prettySize(this.state.speed)) }
+                { this.state.speed }
               </div>
 
               {/* backup progress */}
