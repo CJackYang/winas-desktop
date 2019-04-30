@@ -105,7 +105,7 @@ class BackupNotification extends React.PureComponent {
                     list.map((l, i) => {
                       const count = l.entry ? 1 : l.files ? l.files.length : l.entries ? l.entries.length : 1
                       const name = l.name || (Array.isArray(l.files) && l.files[0] && l.files[0].name) ||
-                        (Array.isArray(l.entries) && l.entries[0] && l.entries[0].name) || ''
+                        (Array.isArray(l.entries) && l.entries[0]) || ''
                       return (
                         <div
                           key={name || i.toString()}
