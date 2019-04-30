@@ -353,6 +353,10 @@ class RenderListByRow extends React.Component {
         this.props.selectStart(e)
       }
     }
+    // whether backup enabled or not
+    const enabled = this.props.currentDrive && this.props.currentDrive.client &&
+     !this.props.currentDrive.client.disabled
+
     return (
       <div style={{ width: '100%', height: '100%' }}>
         <div
@@ -387,18 +391,20 @@ class RenderListByRow extends React.Component {
                       width: 190,
                       height: 48,
                       margin: '8px 0px 8px 44px',
-                      cursor: 'pointer',
+                      cursor: enabled ? 'pointer' : 'default',
                       display: 'flex',
                       alignItems: 'center',
                       borderRadius: 24,
                       boxShadow: '0px 1px 0.9px 0.1px rgba(0, 0, 0, 0.24), 0 0 2px 0px rgba(0, 0, 0, 0.16)'
                     }}
-                    onClick={this.props.addBackupDir}
+                    onClick={() => enabled && this.props.addBackupDir()}
                   >
                     <div style={{ margin: '0px 16px' }}>
-                      <AddCircleIcon style={{ width: 24, height: 24, color: '#009688' }} />
+                      <AddCircleIcon
+                        style={{ width: 24, height: 24, color: enabled ? '#009688' : 'rgba(0,0,0,0.54)' }}
+                      />
                     </div>
-                    <div style={{ color: '#009688' }}>
+                    <div style={{ color: enabled ? '#009688' : 'rgba(0,0,0,0.54)' }}>
                       { i18n.__('Add Backup Directroy')}
                     </div>
                   </div>

@@ -24,12 +24,23 @@ class BackupNotification extends React.PureComponent {
     }
 
     this.forceBackup = (entry) => {
-      const index = this.state.list.indexOf(entry)
-      if (index > -1) {
-        const list = [...this.state.list]
-        list.splice(index, 1)
-        this.setState({ list })
-      }
+      const { pdir, pdrv, name, uuid, hash } = entry.remote
+      this.props.apis.request(
+        'clearDeletedTag',
+        { dirUUID: pdir, driveUUID: pdrv, entryName: name, entryUUID: uuid, hash },
+        (err) => {
+          if (err) this.props.openSnackBar(i18n.__('Operation Failed'))
+          else {
+            const index = this.state.list.indexOf(entry)
+            if (index > -1) {
+              const list = [...this.state.list]
+              list.splice(index, 1)
+              this.setState({ list })
+              ipcRenderer.send('RESTART_BACKUP')
+            }
+          }
+        }
+      )
     }
   }
 
@@ -137,13 +148,14 @@ class BackupNotification extends React.PureComponent {
                         >
                           { !!l.error && convert(l.error.code) }
                         </div>
-
-                        <FlatButton
-                          label={l.isWarning ? i18n.__('Force Backup') : i18n.__('Retry')}
-                          primary
-                          onClick={() => this.forceBackup(l)}
-                        />
-
+                        {
+                          l.isWarning &&
+                          <FlatButton
+                            label={i18n.__('Force Backup')}
+                            primary
+                            onClick={() => this.forceBackup(l)}
+                          />
+                        }
                       </div>
                     ))
                   }

@@ -195,7 +195,7 @@ class NavViews extends React.Component {
           this.searchTimer = null
           if (nav !== this.state.nav) return
           this.views[this.state.nav].search(searchText, this.state.types)
-        }, 500)
+        }, 1000)
       }
     }
 

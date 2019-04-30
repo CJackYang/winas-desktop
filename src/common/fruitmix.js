@@ -295,7 +295,7 @@ class Fruitmix extends EventEmitter {
 
       case 'clearDeletedTag':
         r = this.apost(`drives/${args.driveUUID}/dirs/${args.dirUUID}/entries`, null, true)
-          .field(args.entryName, JSON.stringify({ op: 'remove', uuid: args.entryUUID, hash: args.hash }))
+          .field(args.entryName, JSON.stringify({ op: 'removeWhiteout', uuid: args.entryUUID, hash: args.hash }))
         break
 
       case 'deletePhyDirOrFile':

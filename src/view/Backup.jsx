@@ -175,7 +175,9 @@ class Backup extends Home {
 
       /* backup drive created or not */
       this.currentDrive = this.state.drives.find(d => d.type === 'backup' && d.client && (d.client.id === machineId))
-      if (!this.currentDrive) this.currentDrive = { type: 'backup', client: { id: machineId }, label: hostname, uuid: 'fake-uuid' }
+      if (!this.currentDrive) {
+        this.currentDrive = { type: 'backup', client: { id: machineId }, label: hostname, uuid: 'fake-uuid' }
+      }
 
       /* set current device's backup drives as first */
       entries.unshift(this.currentDrive)

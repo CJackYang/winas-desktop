@@ -3,7 +3,6 @@ import React from 'react'
 import { ipcRenderer } from 'electron'
 import { Menu, MenuItem, Toggle, Popover, Dialog, CircularProgress, RaisedButton, LinearProgress } from 'material-ui'
 
-import prettySize from '../common/prettySize'
 import { ipcReq } from '../common/ipcReq'
 import FlatButton from '../common/FlatButton'
 import { LIButton } from '../common/Buttons'
@@ -598,6 +597,7 @@ class BackupCard extends React.PureComponent {
     const { type, lastBackupTime } = client
     let backgroundColor = '#039be5'
     let Icon = PCIcon
+
     switch (type) {
       case 'Win-PC':
         backgroundColor = '#039be5'
@@ -607,11 +607,11 @@ class BackupCard extends React.PureComponent {
         backgroundColor = '#000000'
         Icon = PCIcon
         break
-      case 'Android-Mobile':
+      case 'Mobile-Android':
         backgroundColor = '#43a047'
         Icon = MobileIcon
         break
-      case 'iOS-Mobile':
+      case 'Mobile-iOS':
         backgroundColor = '#000000'
         Icon = MobileIcon
         break
