@@ -160,7 +160,7 @@ class Preview extends React.Component {
         onClick={(e) => { e.preventDefault(); e.stopPropagation() }}
       >
         <div style={{ width: '100%', height: '100%', position: 'relative' }} className="flexCenter">
-          { type === 'pdf' ? this.renderPDF() : this.renderRawText() }
+          {type === 'pdf' ? this.renderPDF() : this.renderRawText()}
         </div>
       </div>
     )
@@ -175,7 +175,7 @@ class Preview extends React.Component {
         >
           <code>
             <pre style={{ margin: '0 20px', whiteSpace: 'pre-wrap', wordWrap: 'break-word', color: '#545558' }}>
-              { this.state.data }
+              {this.state.data}
             </pre>
           </code>
         </div>
@@ -286,7 +286,7 @@ class Preview extends React.Component {
         onClick={(e) => { e.preventDefault(); e.stopPropagation() }}
       >
         <div style={{ color: '#FFFFFF', fontSize: 20, fontWeight: 500 }}>
-          { i18n.__('Can Not Preview Text')}
+          {i18n.__('Can Not Preview Text')}
         </div>
         <div style={{ height: 8 }} />
         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -322,7 +322,7 @@ class Preview extends React.Component {
     const isPhy = this.props.path && (this.props.path[0].isPhyRoot || this.props.path[0].isUSB || this.props.path[0].isPhy)
 
     const { metadata, hash, size } = this.props.item
-    const photoMagic = ['JPEG', 'GIF', 'PNG', 'BMP']
+    const photoMagic = ['JPEG', 'GIF', 'PNG', 'BMP', 'HEIC']
     const videoMagic = ['MP4', 'MOV', 'MKV'] // ['3GP', 'MP4', 'MOV', 'MKV', 'AVI']
     const audioMagic = ['MP3', 'FLAC']
     const officeMagic = ['DOCX', 'DOC', 'XLSX', 'XLS', 'PPT', 'PPTX']
@@ -356,30 +356,30 @@ class Preview extends React.Component {
         <DialogOverlay open={this.state.alert} >
           {
             this.state.alert &&
-              <div
-                style={{ width: 380, padding: '20px 20px 0px 20px' }}
-                onClick={(e) => { e.preventDefault(); e.stopPropagation() }}
-              >
-                <div style={{ height: 60 }} className="title">
-                  { i18n.__('Tips') }
-                </div>
-                <div style={{ fontSize: 14, lineHeight: '30px', color: 'var(--grey-text)' }}>
-                  { i18n.__('File Oversize Text') }
-                </div>
-                <div style={{ height: 20 }} />
-                <div style={{ height: 76, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                  <RSButton
-                    alt
-                    label={i18n.__('Cancel')}
-                    onClick={() => this.setState({ alert: false })}
-                  />
-                  <div style={{ width: 10 }} />
-                  <RSButton
-                    label={i18n.__('Download')}
-                    onClick={() => { this.props.download(); this.setState({ alert: false }); this.props.close() }}
-                  />
-                </div>
+            <div
+              style={{ width: 380, padding: '20px 20px 0px 20px' }}
+              onClick={(e) => { e.preventDefault(); e.stopPropagation() }}
+            >
+              <div style={{ height: 60 }} className="title">
+                {i18n.__('Tips')}
               </div>
+              <div style={{ fontSize: 14, lineHeight: '30px', color: 'var(--grey-text)' }}>
+                {i18n.__('File Oversize Text')}
+              </div>
+              <div style={{ height: 20 }} />
+              <div style={{ height: 76, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                <RSButton
+                  alt
+                  label={i18n.__('Cancel')}
+                  onClick={() => this.setState({ alert: false })}
+                />
+                <div style={{ width: 10 }} />
+                <RSButton
+                  label={i18n.__('Download')}
+                  onClick={() => { this.props.download(); this.setState({ alert: false }); this.props.close() }}
+                />
+              </div>
+            </div>
           }
         </DialogOverlay>
       </div>

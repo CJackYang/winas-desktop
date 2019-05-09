@@ -10,7 +10,8 @@ import FlatButton from '../common/FlatButton'
 
 const hasThumb = (metadata) => {
   if (!metadata) return false
-  const arr = ['PNG', 'JPEG', 'GIF', 'BMP', 'TIFF', 'RM', 'RMVB', 'WMV', 'AVI', 'MPEG', 'MP4', '3GP', 'MOV', 'FLV', 'MKV', 'PDF']
+  const arr = ['PNG', 'JPEG', 'GIF', 'BMP', 'TIFF', 'HEIC', 'RM', 'RMVB', 'WMV', 'AVI', 'MPEG', 'MP4',
+    '3GP', 'MOV', 'FLV', 'MKV', 'PDF']
   if (arr.includes(metadata.type)) return true
   return false
 }
@@ -75,41 +76,41 @@ class Row extends React.Component {
         {/* header */}
         {
           list.first && list.entries[0].entry.type !== 'backup' &&
-            <div style={{ height: 48, display: 'flex', alignItems: 'center ' }}>
-              <div style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)', width: 64 }}>
-                { list.entries[0].entry.type === 'directory' ? i18n.__('Directory') : i18n.__('File') }
-              </div>
-              <div style={{ flexGrow: 1 }} />
-              {
-                !list.entries[0].index && !this.props.inPublicRoot &&
-                  <div style={{ display: 'flex', alignItems: 'center ', marginRight: 84 }}>
-                    <FlatButton
-                      label={this.state.type}
-                      labelStyle={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }}
-                      onClick={this.toggleMenu}
+          <div style={{ height: 48, display: 'flex', alignItems: 'center ' }}>
+            <div style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)', width: 64 }}>
+              {list.entries[0].entry.type === 'directory' ? i18n.__('Directory') : i18n.__('File')}
+            </div>
+            <div style={{ flexGrow: 1 }} />
+            {
+              !list.entries[0].index && !this.props.inPublicRoot &&
+              <div style={{ display: 'flex', alignItems: 'center ', marginRight: 84 }}>
+                <FlatButton
+                  label={this.state.type}
+                  labelStyle={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }}
+                  onClick={this.toggleMenu}
+                />
+                {/* menu */}
+                <Popover
+                  open={this.state.open}
+                  anchorEl={this.state.anchorEl}
+                  anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                  targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+                  onRequestClose={this.toggleMenu}
+                >
+                  <Menu style={{ minWidth: 240 }}>
+                    <MenuItem
+                      style={{ fontSize: 13 }}
+                      leftIcon={this.state.type === i18n.__('Name') ? <CheckedIcon /> : <div />}
+                      primaryText={i18n.__('Name')}
+                      onClick={() => this.handleChange(i18n.__('Name'))}
                     />
-                    {/* menu */}
-                    <Popover
-                      open={this.state.open}
-                      anchorEl={this.state.anchorEl}
-                      anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                      targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-                      onRequestClose={this.toggleMenu}
-                    >
-                      <Menu style={{ minWidth: 240 }}>
-                        <MenuItem
-                          style={{ fontSize: 13 }}
-                          leftIcon={this.state.type === i18n.__('Name') ? <CheckedIcon /> : <div />}
-                          primaryText={i18n.__('Name')}
-                          onClick={() => this.handleChange(i18n.__('Name'))}
-                        />
-                        <MenuItem
-                          style={{ fontSize: 13 }}
-                          leftIcon={this.state.type === i18n.__('Date Modified') ? <CheckedIcon /> : <div />}
-                          primaryText={i18n.__('Date Modified')}
-                          onClick={() => this.handleChange(i18n.__('Date Modified'))}
-                        />
-                        {/*
+                    <MenuItem
+                      style={{ fontSize: 13 }}
+                      leftIcon={this.state.type === i18n.__('Date Modified') ? <CheckedIcon /> : <div />}
+                      primaryText={i18n.__('Date Modified')}
+                      onClick={() => this.handleChange(i18n.__('Date Modified'))}
+                    />
+                    {/*
                         <MenuItem
                           style={{ fontSize: 13 }}
                           leftIcon={this.state.type === i18n.__('Date Taken') ? <CheckedIcon /> : <div />}
@@ -117,33 +118,33 @@ class Row extends React.Component {
                           onClick={() => this.handleChange(i18n.__('Date Taken'))}
                         />
                         */}
-                        <MenuItem
-                          style={{ fontSize: 13 }}
-                          leftIcon={this.state.type === i18n.__('Size') ? <CheckedIcon /> : <div />}
-                          primaryText={i18n.__('Size')}
-                          onClick={() => this.handleChange(i18n.__('Size'))}
-                        />
-                      </Menu>
-                    </Popover>
+                    <MenuItem
+                      style={{ fontSize: 13 }}
+                      leftIcon={this.state.type === i18n.__('Size') ? <CheckedIcon /> : <div />}
+                      primaryText={i18n.__('Size')}
+                      onClick={() => this.handleChange(i18n.__('Size'))}
+                    />
+                  </Menu>
+                </Popover>
 
-                    {/* direction icon */}
-                    <IconButton
-                      style={{ height: 36, width: 36, padding: 9, borderRadius: '18px' }}
-                      iconStyle={{
-                        height: 18,
-                        width: 18,
-                        color: 'rgba(0,0,0,0.54)',
-                        transition: 'transform 0ms',
-                        transform: (sortType === h.up || !sortType) ? 'rotate(180deg)' : ''
-                      }}
-                      hoveredStyle={{ backgroundColor: 'rgba(0,0,0,0.18)' }}
-                      onClick={() => { sortType === h.up || !sortType ? changeSortType(h.down) : changeSortType(h.up) }}
-                    >
-                      { sortType === h.up || !sortType ? <ArrowDownIcon /> : <ArrowDownIcon /> }
-                    </IconButton>
-                  </div>
-              }
-            </div>
+                {/* direction icon */}
+                <IconButton
+                  style={{ height: 36, width: 36, padding: 9, borderRadius: '18px' }}
+                  iconStyle={{
+                    height: 18,
+                    width: 18,
+                    color: 'rgba(0,0,0,0.54)',
+                    transition: 'transform 0ms',
+                    transform: (sortType === h.up || !sortType) ? 'rotate(180deg)' : ''
+                  }}
+                  hoveredStyle={{ backgroundColor: 'rgba(0,0,0,0.18)' }}
+                  onClick={() => { sortType === h.up || !sortType ? changeSortType(h.down) : changeSortType(h.up) }}
+                >
+                  {sortType === h.up || !sortType ? <ArrowDownIcon /> : <ArrowDownIcon />}
+                </IconButton>
+              </div>
+            }
+          </div>
         }
         {
           list.first && list.entries[0].entry.type === 'backup' && <div style={{ height: 24 }} />
@@ -213,30 +214,30 @@ class Row extends React.Component {
                   {/* preview or icon */}
                   {
                     entry.type !== 'directory' &&
-                      <div
-                        draggable={false}
-                        className="flexCenter"
-                        style={{ height: size - 48, width: size, marginLeft: -1, overflow: 'hidden' }}
-                      >
-                        {
-                          entry.type === 'directory'
-                            ? <AllFileIcon style={{ width: 48, height: 48, color: '#ffa93e' }} />
-                            : ((rowSum < 500 || !isScrolling) && entry.hash && hasThumb(entry.metadata)
-                              ? (
-                                <Thumb
-                                  full
-                                  name={entry.name}
-                                  metadata={entry.metadata}
-                                  bgColor="transparent"
-                                  digest={entry.hash}
-                                  ipcRenderer={this.props.ipcRenderer}
-                                  height={size - 48}
-                                  width={size}
-                                />
-                              ) : renderFileIcon(entry.name, entry.metadata, 48)
-                            )
-                        }
-                      </div>
+                    <div
+                      draggable={false}
+                      className="flexCenter"
+                      style={{ height: size - 48, width: size, marginLeft: -1, overflow: 'hidden' }}
+                    >
+                      {
+                        entry.type === 'directory'
+                          ? <AllFileIcon style={{ width: 48, height: 48, color: '#ffa93e' }} />
+                          : ((rowSum < 500 || !isScrolling) && entry.hash && hasThumb(entry.metadata)
+                            ? (
+                              <Thumb
+                                full
+                                name={entry.name}
+                                metadata={entry.metadata}
+                                bgColor="transparent"
+                                digest={entry.hash}
+                                ipcRenderer={this.props.ipcRenderer}
+                                height={size - 48}
+                                width={size}
+                              />
+                            ) : renderFileIcon(entry.name, entry.metadata, 48)
+                          )
+                      }
+                    </div>
                   }
 
                   {/* file name */}
@@ -254,14 +255,14 @@ class Row extends React.Component {
                       className="flexCenter"
                       style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: '#FFF', margin: '0px 12px' }}
                     >
-                      { entry.type === 'directory' ? <AllFileIcon style={{ width: 24, height: 24, color: '#ffa93e' }} />
-                        : renderFileIcon(entry.name, entry.metadata, 24) }
+                      {entry.type === 'directory' ? <AllFileIcon style={{ width: 24, height: 24, color: '#ffa93e' }} />
+                        : renderFileIcon(entry.name, entry.metadata, 24)}
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                       <div style={{ maxWidth: size - (entry.archived ? 108 : 80) }} className="text">
-                        { entry.bname || entry.name }
+                        {entry.bname || entry.name}
                       </div>
-                      { entry.archived && <Icon style={{ width: 18, height: 18, marginLeft: 16 }} /> }
+                      {entry.archived && <Icon style={{ width: 18, height: 18, marginLeft: 16 }} />}
                     </div>
                     <div style={{ width: 8 }} />
                   </div>
