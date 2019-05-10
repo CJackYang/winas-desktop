@@ -106,12 +106,12 @@ class Login extends React.Component {
           <div style={Object.assign({ left: wechatL }, baseStyle)} >
             {
               this.state.status === 'wechatLogin' &&
-                <WeChatLogin
-                  {...this.props}
-                  status={this.state.status}
-                  onSuccess={this.wisnucLoginSuccess}
-                  backToLogin={() => this.setState({ status: 'wisnucLogin' })}
-                />
+              <WeChatLogin
+                {...this.props}
+                status={this.state.status}
+                onSuccess={this.wisnucLoginSuccess}
+                backToLogin={() => this.setState({ status: 'wisnucLogin' })}
+              />
             }
           </div>
         </div>

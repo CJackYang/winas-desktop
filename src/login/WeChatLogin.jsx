@@ -96,7 +96,8 @@ class WeChatLogin extends React.Component {
                 token: null
               }
               const list = [...r.ownStations, ...r.sharedStations]
-              this.props.onSuccess({ list, phonenumber: username, winasUserId: id, phi: user })
+              const lastSN = r.lastUseDeviceSn
+              this.props.onSuccess({ lastSN, list, phonenumber: username, winasUserId: id, phi: user })
             }
           })
         }
@@ -126,7 +127,7 @@ class WeChatLogin extends React.Component {
         </div>
 
         <div style={{ fontSize: 14, color: '#f44336' }} className="flexCenter">
-          { this.state.error }
+          {this.state.error}
         </div>
       </div>
     )
@@ -157,11 +158,11 @@ class WeChatLogin extends React.Component {
             <BackwardIcon />
           </LIButton>
         </div>
-        { this.state.error ? this.renderFailed() : this.renderQR() }
+        {this.state.error ? this.renderFailed() : this.renderQR()}
 
         {/* Title */}
         <div style={{ position: 'absolute', top: 116, left: 80, fontSize: 28, display: 'flex', alignItems: 'center' }}>
-          { i18n.__('Login via WeChat') }
+          {i18n.__('Login via WeChat')}
         </div>
 
         {/* footer */}
@@ -169,9 +170,9 @@ class WeChatLogin extends React.Component {
           className="flexCenter"
           style={{ position: 'absolute', bottom: 0, height: 40, width: '100%', fontSize: 12, color: 'rgba(0,0,0,.38)' }}
         >
-          <div> { `©${new Date().getFullYear()}${i18n.__('Copyright Info')}` } </div>
+          <div> {`©${new Date().getFullYear()}${i18n.__('Copyright Info')}`} </div>
           <div style={{ marginLeft: 20 }}>
-            { i18n.__('Client Version %s', global.config && global.config.appVersion) }
+            {i18n.__('Client Version %s', global.config && global.config.appVersion)}
           </div>
         </div>
       </div>
