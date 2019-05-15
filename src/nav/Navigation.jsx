@@ -583,7 +583,9 @@ class NavViews extends React.Component {
                       }}
                     />
                   </div>
-                  <div style={{ opacity: 0.54, color: 'rgba(0,0,0,.54)', fontSize: 12, fontWeight: 500 }}> {usage} </div>
+                  <div style={{ opacity: 0.54, color: 'rgba(0,0,0,.54)', fontSize: 12, fontWeight: 500 }}>
+                    {usage}
+                  </div>
                 </div>
                 <div style={{ position: 'absolute', right: 12, top: 24, opacity: 0.38, height: 18, width: 18 }} >
                   <ArrowDownIcon />

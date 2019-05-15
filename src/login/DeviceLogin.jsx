@@ -52,7 +52,6 @@ class ChangeDevice extends React.Component {
 
   async remoteLoginAsync (device) {
     const { account } = this.props
-    console.log('this.props', this.props)
     const args = { deviceSN: device.sn }
     const { token, cookie } = this.props.phi
     const [tokenRes, users, space, isLAN] = await Promise.all([
@@ -68,7 +67,8 @@ class ChangeDevice extends React.Component {
 
     if (!LANToken || !user) throw Error('get LANToken or user error')
     Object.assign(user, { cookie })
-    return ({ dev: device, user, token: isLAN ? LANToken : token, space, isCloud: !isLAN })
+    const currentToken = isLAN ? LANToken : token
+    return ({ dev: device, user, token: currentToken, space, isCloud: !isLAN })
   }
 
   remoteLogin (device) {
