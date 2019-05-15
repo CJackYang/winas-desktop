@@ -1005,7 +1005,7 @@
   "Task Downloading": "正在下载",
   "Task Finished": "已完成",
   "Task Unknown State": "未知状态",
-  "More Than 24 Hours": "> 24 小时",
+  "More Than 72 Hours": "大于72小时",
   "Resume": "继续",
   "Pause": "暂停",
 

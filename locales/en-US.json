@@ -707,7 +707,7 @@
   "Task Downloading": "Downloading",
   "Task Finished": "Finished",
   "Task Unknown State": "Unknown state",
-  "More Than 24 Hours": "More than 24 hours",
+  "More Than 72 Hours": "> 72 hours",
   "Resume": "Resume",
   "Pause": "Pasue",
 

@@ -52,43 +52,6 @@ class FileDetail extends React.PureComponent {
       fileCount: 0,
       fileTotalSize: 0
     }
-    // String transformLocation(loc) {
-    //   switch (loc) {
-    //     case 'home':
-    //       return '我的空间';
-    //     case 'built-in':
-    //       return '共享空间';
-    //     case 'backup':
-    //       return '备份空间';
-    //   }
-    //   return '';
-    // }
-
-    // Future getNamePath(AppState state) async {
-    //   print("entry $entry");
-    //   try {
-    //     // request entries/path
-    //     final res = await state.apis
-    //         .req('listNavDir', {'driveUUID': entry.pdrv, 'dirUUID': entry.pdir});
-
-    //     // root
-    //     List<String> paths = [transformLocation(entry.location)];
-
-    //     Drive drive = state.drives.firstWhere((d) => d.uuid == entry.pdrv);
-    //     if (drive.type == 'backup') {
-    //       paths.add(drive.label);
-    //     }
-
-    //     // skip first item
-    //     final rest = (res.data['path'] as List).map((p) => p['name']).skip(1);
-
-    //     paths.addAll(List.from(rest));
-    //     rows.update(namepath: paths.join('/'));
-    //   } catch (error) {
-    //     print('getNamePath error: $error');
-    //   }
-    //   setState(() {});
-    // }
 
     this.reqAsync = async () => {
       this.setState({ loading: true })

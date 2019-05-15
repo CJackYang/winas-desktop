@@ -82,15 +82,17 @@ class RunningTask extends React.Component {
     if (h.toString().length === 1) h = `0${h}`
     if (m.toString().length === 1) m = `0${m}`
     if (s.toString().length === 1) s = `0${s}`
-    if (h > 24) return i18n.__('More Than 24 Hours')
+    if (h > 72) return i18n.__('More Than 72 Hours')
     return `${h} : ${m} : ${s}`
   }
 
   renderSize (task) {
     const finishCount = task.finishCount > 0 ? task.finishCount : 0
-    const uploaded = task.count === 1 ? prettySize(task.completeSize) : `${finishCount}/${task.count}`
+    const sizeProgress = `${prettySize(task.completeSize)} / ${prettySize(task.trueSize || task.size)}`
+    const countProgress = `${finishCount} / ${task.count}`
+    const uploaded = task.count === 1 ? sizeProgress : `${sizeProgress} ( ${countProgress} )`
     return (
-      <div style={{ height: 20, width: 160, display: 'flex', alignItems: 'center', color: 'rgba(0,0,0,.54)' }}>
+      <div style={{ height: 20, width: '100%', display: 'flex', alignItems: 'center', color: 'rgba(0,0,0,.54)' }}>
         <div> { uploaded } </div>
         <div style={{ flexGrow: 1 }} />
       </div>
@@ -161,8 +163,8 @@ class RunningTask extends React.Component {
               { task.targetsCount > 1 && i18n.__('And Other %s Items', task.targetsCount)}
             </div>
           </div>
-          <div>
-            { this.renderSize(task) }
+          {/* finished size and count */}
+          <div> { this.renderSize(task) }
           </div>
         </div>
 
