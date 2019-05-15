@@ -1,6 +1,6 @@
 appId: com.aidingnan.app
 copyright: "Shanghai Aidingnan Technology Co., Ltd."
-productName: pocket_drive
+productName: 口袋网盘
 
 asar: true
 compression: normal
@@ -43,7 +43,7 @@ nsis:
   language: "1033"
   runAfterFinish: false
   deleteAppDataOnUninstall: true
-  artifactName: ${productName}-Setup-${version}-${env.arch}.${ext}
+  artifactName: pocket-drive-Setup-${version}-${env.arch}.${ext}
 
 linux:
   target:
