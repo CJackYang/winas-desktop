@@ -23,6 +23,7 @@ dmg:
       y: 150
   background:
     logo/background.png
+  artifactName: Pocket-drive-setup-${version}.${ext}
 
 mac:
   target:
@@ -30,9 +31,6 @@ mac:
     - zip
   category: public.app-category.tools
   icon: logo/icon.icns
-
-dmg:
-  artifactName: Pocket-drive-setup-${version}.${ext}
 
 win:
   target: nsis
