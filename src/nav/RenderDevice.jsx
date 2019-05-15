@@ -32,7 +32,7 @@ class Disk extends React.PureComponent {
   renderFailed () {
     return (
       <div style={{ width: '100%', height: 200 }} className="flexCenter" >
-        { i18n.__('Error in Base Text') }
+        {i18n.__('Error in Base Text')}
       </div>
     )
   }
@@ -96,7 +96,7 @@ class Disk extends React.PureComponent {
               <div style={{ display: 'flex', alignItems: 'center', marginTop: 4, width: 100 }} key={title}>
                 <div style={{ width: 8, height: 8, backgroundColor: color, marginTop: 2 }} />
                 <div style={{ fontSize: 12, color: '#505259', marginLeft: 4 }}>
-                  { title }
+                  {title}
                 </div>
               </div>
             ))
@@ -107,9 +107,9 @@ class Disk extends React.PureComponent {
           {
             data.map(({ title, size }) => (
               <div style={{ height: 40, display: 'flex', alignItems: 'center', width: '100%' }} key={title}>
-                <div style={{ fontWeight: 500, color: 'rgba(0,0,0,.76)' }}> { title }</div>
+                <div style={{ fontWeight: 500, color: 'rgba(0,0,0,.76)' }}> {title}</div>
                 <div style={{ flexGrow: 1 }} />
-                <div style={{ fontWeight: 500, color: 'rgba(0,0,0,.29)' }}> { prettySize(size) } </div>
+                <div style={{ fontWeight: 500, color: 'rgba(0,0,0,.29)' }}> {prettySize(size)} </div>
               </div>
             ))
           }
@@ -119,15 +119,15 @@ class Disk extends React.PureComponent {
   }
 
   render () {
-    const name = this.props.selectedDevice.name || 'Winas'
+    const name = this.props.selectedDevice.name || i18n.__('Default Product Name')
     return (
       <div style={{ width: 260, height: 339, marginTop: -8, overflow: 'hidden' }}>
         <div style={{ height: 56, position: 'relative', paddingLeft: 24, paddingTop: 16 }}>
           <div style={{ height: 24, fontSize: 18, fontWeight: 500, color: 'rgba(0,0,0,.76)' }}>
-            { name }
+            {name}
           </div>
           <div style={{ height: 22, fontSize: 12, color: 'rgba(14,5,10,.29)' }}>
-            { i18n.__('Current Device') }
+            {i18n.__('Current Device')}
           </div>
           <div style={{ position: 'absolute', top: 16, right: 8 }}>
             <FlatButton
@@ -137,7 +137,7 @@ class Disk extends React.PureComponent {
             />
           </div>
         </div>
-        { this.renderStorage() }
+        {this.renderStorage()}
       </div>
     )
   }

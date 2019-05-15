@@ -285,7 +285,7 @@ class NavViews extends React.Component {
       >
         <div style={{ height: '100%', width: '100%', position: 'relative' }}>
           {/* Toolbar */}
-          { this.views[this.state.nav].renderToolBar({ style: toolBarStyle }) }
+          {this.views[this.state.nav].renderToolBar({ style: toolBarStyle })}
 
           {/* Title and BreadCrumbItem */}
           {/* this.views[this.state.nav].renderTitle({ style: titleStyle }) */}
@@ -294,46 +294,46 @@ class NavViews extends React.Component {
 
           {/* File Content */}
           <div style={{ height: 'calc(100% - 88px)', width: '100%' }} >
-            { this.renderView() }
+            {this.renderView()}
           </div>
         </div>
 
         {/* drag item */}
-        { this.views[this.state.nav].renderDragItems() }
+        {this.views[this.state.nav].renderDragItems()}
 
         {/* Tasks */}
         {
           this.state.showTasks &&
-            <Tasks
-              apis={this.props.apis}
-              onRequestClose={() => this.setState({ showTasks: false }, () => this.views[this.state.nav].navEnter())}
-              openMovePolicy={this.openMovePolicy}
-            />
+          <Tasks
+            apis={this.props.apis}
+            onRequestClose={() => this.setState({ showTasks: false }, () => this.views[this.state.nav].navEnter())}
+            openMovePolicy={this.openMovePolicy}
+          />
         }
 
         {/* upload policy: upload -> ipc || tasks -> handleTask */}
         <DialogOverlay open={!!this.state.conflicts} onRequestClose={() => this.setState({ conflicts: null })} modal >
           {
             this.state.conflicts &&
-              <Policy
-                primaryColor={this.state.primaryColor}
-                data={this.state.conflicts}
-                ipcRenderer={ipcRenderer}
-                handleTask={this.handleTask}
-                onRequestClose={() => this.setState({ conflicts: null })}
-              />
+            <Policy
+              primaryColor={this.state.primaryColor}
+              data={this.state.conflicts}
+              ipcRenderer={ipcRenderer}
+              handleTask={this.handleTask}
+              onRequestClose={() => this.setState({ conflicts: null })}
+            />
           }
         </DialogOverlay>
 
         <DialogOverlay open={!!this.state.newRel} onRequestClose={() => this.setState({ newRel: null })} modal transparent >
           {
             this.state.newRel &&
-              <UpdateFirmDialog
-                {...this.props}
-                rel={this.state.newRel}
-                device={this.props.apis.device.data}
-                onRequestClose={() => this.setState({ newRel: null })}
-              />
+            <UpdateFirmDialog
+              {...this.props}
+              rel={this.state.newRel}
+              device={this.props.apis.device.data}
+              onRequestClose={() => this.setState({ newRel: null })}
+            />
           }
         </DialogOverlay>
 
@@ -345,7 +345,7 @@ class NavViews extends React.Component {
     return (
       <div style={{ height: '100%', width: '100%', position: 'relative' }} >
         {/* Toolbar */}
-        { this.renderView() }
+        {this.renderView()}
       </div>
     )
   }
@@ -393,7 +393,7 @@ class NavViews extends React.Component {
           <div style={{ flexGrow: 1 }} />
         </div>
         <div style={{ height: 'calc(100% - 50px)', width: '100%' }}>
-          { this.renderView() }
+          {this.renderView()}
         </div>
       </div>
     )
@@ -435,10 +435,10 @@ class NavViews extends React.Component {
               >
                 <Icon style={{ color, marginLeft: 16 }} />
                 <div style={{ fontWeight: 500, marginLeft: 32, opacity: 0.87 }}>
-                  { name }
+                  {name}
                 </div>
                 <div style={{ flexGrow: 1 }} />
-                { isSelected && <CloseIcon style={{ height: 18, width: 18 }} /> }
+                {isSelected && <CloseIcon style={{ height: 18, width: 18 }} />}
                 <div style={{ width: 16 }} />
               </div>
             )
@@ -461,7 +461,7 @@ class NavViews extends React.Component {
       // console.error('parse error')
     }
     const usage = `${used}/${total}`
-    const deviceName = this.props.selectedDevice.name || 'Winas'
+    const deviceName = this.props.selectedDevice.name || i18n.__('Default Product Name')
 
     return (
       <div
@@ -490,7 +490,7 @@ class NavViews extends React.Component {
               tooltip={!this.state.pin ? i18n.__('Draw Menu') : i18n.__('Withdraw Menu')}
               tooltipPosition="bottom-right"
             >
-              { !this.state.pin ? <MenuIcon /> : <MenuIcon /> }
+              {!this.state.pin ? <MenuIcon /> : <MenuIcon />}
             </IconButton>
           </div>
           <div style={{ height: 34, width: this.state.pin ? 180 : 0, WebkitAppRegion: 'drag', transition }} />
@@ -511,9 +511,9 @@ class NavViews extends React.Component {
           </div>
           {
             !this.state.searchMode &&
-              <div style={{ height: 72, fontSize: 24, fontWeight: 500, alignItems: 'center', display: 'flex' }} >
-                WISNUC
-              </div>
+            <div style={{ height: 72, fontSize: 24, fontWeight: 500, alignItems: 'center', display: 'flex' }} >
+              {i18n.__('Default Product Name')}
+            </div>
           }
         </div>
         {
@@ -531,9 +531,9 @@ class NavViews extends React.Component {
                 onClick={this.enterSearchMode}
               >
                 <SearchButton
-                  fire={() => {}}
+                  fire={() => { }}
                   hint={i18n.__('Search')}
-                  clear={() => {}}
+                  clear={() => { }}
                   shrinked={shrinked}
                 />
               </div>
@@ -550,7 +550,7 @@ class NavViews extends React.Component {
               </div>
               {
                 ['home', 'public'].includes(this.state.nav) &&
-                  this.views[this.state.nav].renderCreateNewButton({ shrinked, primaryColor: this.state.primaryColor })
+                this.views[this.state.nav].renderCreateNewButton({ shrinked, primaryColor: this.state.primaryColor })
               }
               <div style={{ flexGrow: 1 }} />
               <div
@@ -571,7 +571,7 @@ class NavViews extends React.Component {
                   </div>
                 </div>
                 <div style={{ height: 72, marginTop: 16 }}>
-                  <div style={{ opacity: 0.87, fontWeight: 500 }}> { deviceName } </div>
+                  <div style={{ opacity: 0.87, fontWeight: 500 }}> {deviceName} </div>
                   <div style={{ height: 4, width: 92, backgroundColor: 'rgba(0,0,0,.08)', position: 'relative', margin: '8px 0px' }} >
                     <div
                       style={{
@@ -583,7 +583,7 @@ class NavViews extends React.Component {
                       }}
                     />
                   </div>
-                  <div style={{ opacity: 0.54, color: 'rgba(0,0,0,.54)', fontSize: 12, fontWeight: 500 }}> { usage } </div>
+                  <div style={{ opacity: 0.54, color: 'rgba(0,0,0,.54)', fontSize: 12, fontWeight: 500 }}> {usage} </div>
                 </div>
                 <div style={{ position: 'absolute', right: 12, top: 24, opacity: 0.38, height: 18, width: 18 }} >
                   <ArrowDownIcon />
@@ -607,7 +607,7 @@ class NavViews extends React.Component {
               </Popover>
             </div>
           ) : (
-            /** search mode */
+          /** search mode */
             <div
               style={{
                 position: 'relative',
@@ -652,9 +652,9 @@ class NavViews extends React.Component {
                   alignItems: 'center'
                 }}
               >
-                { i18n.__('File Types') }
+                {i18n.__('File Types')}
               </div>
-              { this.renderTypes() }
+              {this.renderTypes()}
             </div>
           )
         }
@@ -682,7 +682,7 @@ class NavViews extends React.Component {
     return (
       <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }} >
         {/* Navs */}
-        { this.renderNavs() }
+        {this.renderNavs()}
         <div
           style={{
             position: 'absolute',
@@ -724,7 +724,7 @@ class NavViews extends React.Component {
         >
           <div style={{ height: 34, backgroundColor: '#FFF', WebkitAppRegion: 'drag' }} />
           <div style={{ height: 'calc(100% - 38px)', width: '100%', position: 'relative' }} >
-            { view }
+            {view}
           </div>
         </div>
         {/** change device dialog */}

@@ -1,6 +1,6 @@
-appId: com.wisnuc.app
-copyright: "Shanghai Wisnuc Technology Co., Ltd."
-productName: Winas
+appId: com.aidingnan.app
+copyright: "Shanghai Aidingnan Technology Co., Ltd."
+productName: pocket_drive
 
 asar: true
 compression: normal

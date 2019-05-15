@@ -15,11 +15,6 @@ public/*.json
 /ele
 /tmp
 
-wisnuc-linux-x64.tar.gz
-wisnuc-linux-x64/
-wisnuc-win32-x64.tar.gz
-wisnuc-win32-x64/
-
 /public/*.hot-update.js
 /public/*.hot-update.json
 /public/bundle.js

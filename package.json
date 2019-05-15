@@ -1,9 +1,9 @@
 {
-  "name": "winas",
+  "name": "pocket_drive",
   "version": "0.8.2",
-  "description": "WinNAS",
-  "author": "WISNUC <support@winsuntech.cn>",
-  "repository": "https://github.com/wisnuc/winas-desktop.git",
+  "description": "pocket drive",
+  "author": "aidingnan <support@aidingnan.com>",
+  "repository": "https://github.com/aidingnan/winas-desktop.git",
   "private": true,
   "main": "main.js",
   "scripts": {

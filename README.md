@@ -8,7 +8,7 @@ sudo apt-get install npm
 sudo npm install -g n
 sudo n latest
 node -v
-git clone https://github.com/wisnuc/winas-desktop.git
+git clone https://github.com/aidingnan/winas-desktop.git
 cd winas-desktop
 npm install --registry=https://registry.npm.taobao.org
 npm run rebuild

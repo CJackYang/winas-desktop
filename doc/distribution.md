@@ -5,7 +5,7 @@
 ### 下载源码
 
 ```bash
-git clone https://github.com/wisnuc/phi-electron.git
+git clone https://github.com/aidingnan/winas-desktop.git
 cd phi-electron
 npm install
 npm run rebuild

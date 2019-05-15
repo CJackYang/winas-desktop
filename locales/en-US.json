@@ -68,7 +68,7 @@
   "==== login/LocalLogin.jsx ====": "",
   "Device Not Initialized": "This device is not initialized",
   "Initialize": "Initialize",
-  "Error: No User":"Error: No user",
+  "Error: No User": "Error: No user",
   "Probing": "Probing",
   "Error: System Error": "Error: Failed to connect to the device",
   "Error: Fruitmix Error": "Error: Failed to start fruitmix",
@@ -126,7 +126,7 @@
   "==== login/ModelNameCard.jsx ====": "",
   "Unknown Serial": "Unknown serial",
   "PC": "Personal computer",
-  "Wisnuc Box": "WISNUC Box",
+  "Default Product Name": "Pocket Drive",
 
   "==== login/NoDevice.jsx ====": "",
   "ErrorText: Wrong IP": "The IP provided is invalid.",
@@ -403,7 +403,7 @@
   "Install Firmware": "Install firmware",
   "Install Firmware Text 1 %s": "The version %s firmware will be installed.",
   "Install Firmware Text 2": "Recommended with the latest WISNUC client.",
-  "Firmware Error Text": "The current firmware can't automatically upgrade, you can find the manual upgrade tutorial in http://www.wisnuc.com/support or http://bbs.wisnuc.com.",
+  "Firmware Error Text": "The current firmware can't automatically upgrade, you can find the manual upgrade tutorial in http://www.aidingnan.com/support or http://bbs.aidingnan.com.",
 
   "==== device/NetworkInfo.jsx ====": "",
   "NIC Name": "NIC name",
@@ -455,7 +455,7 @@
 
   "==== nav/NavDrawer.jsx ====": "",
   "Connect via Cloud": "Connected via Cloud",
-  "Box Title": "WISNUC Box",
+  "Box Title": "Pocket Drive",
   "Management Title": "Management",
   "Device Management": "Device",
   "Files": "Files",
@@ -547,7 +547,6 @@
 
   "==== view/InstalledApps.jsx ====": "",
   "InstalledApps Menu Name": "Installed Apps",
-
   "Date Unknown Text": "Unknown",
   "Shift Tips": "Hold Shift and click to select many items at once",
   "Remove Media Success %s": "%s photo(s) removed",
@@ -680,7 +679,7 @@
   "%s To Current Folder": "%s to current folder",
   "Create New Folder in %s": "Create a new folder in '%s'",
   "Empty Folder Text": "Folder is empty",
-  
+
   "==== file/NewFolderDialog.jsx ====": "",
   "Mkdir Success": "New folder created",
   "Mkdir Hint": "Folder name",

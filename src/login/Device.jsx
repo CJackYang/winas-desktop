@@ -150,7 +150,8 @@ class Device extends React.Component {
     const info = this.device && this.device.state && this.device.state.info && this.device.state.info.data
     const sn = info && info.device && info.device.sn && info.device.sn.slice(-4)
     const name = this.props.cdev && this.props.cdev.name
-    const deviceName = name || (sn ? `Winas-${sn}` : 'Winas')
+    const productName = i18n.__('Default Product Name')
+    const deviceName = name || (sn ? `${productName}-${sn}` : productName)
     return (
       <div style={{ height: 80, display: 'flex', alignItems: 'center', width: '100%', position: 'relative', lineHeight: 'normal' }}>
         <div style={{ width: 56, marginLeft: 8, display: 'flex', alignItems: 'center' }}>
@@ -158,10 +159,10 @@ class Device extends React.Component {
         </div>
         <div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div style={{ opacity: 0.87, fontWeight: 500 }}> { deviceName } </div>
+            <div style={{ opacity: 0.87, fontWeight: 500 }}> {deviceName} </div>
             <div style={{ flexGrow: 1 }} />
             <div style={{ fontSize: 12, color: isFailed ? '#f44336' : 'rgba(0,0,0,.38)', height: 20 }} className="flexCenter">
-              { this.renderStatus() }
+              {this.renderStatus()}
             </div>
           </div>
           <div
@@ -185,7 +186,7 @@ class Device extends React.Component {
             />
           </div>
           <div style={{ opacity: 0.54, color: 'rgba(0,0,0,.54)', fontSize: 12, fontWeight: 500 }}>
-            { (used && total) ? `${used} / ${total}` : '-- / --' }
+            {(used && total) ? `${used} / ${total}` : '-- / --'}
           </div>
         </div>
       </div>
