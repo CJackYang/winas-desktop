@@ -1111,6 +1111,7 @@ class Home extends Base {
                 primaryColor={this.groupPrimaryColor()}
                 refresh={this.refresh}
                 navTo={navTo}
+                showTasks={() => this.ctx.setState({ showTasks: true })}
                 type="move"
                 operation="move"
               />
@@ -1132,6 +1133,7 @@ class Home extends Base {
                 primaryColor={this.groupPrimaryColor()}
                 refresh={this.refresh}
                 navTo={navTo}
+                showTasks={() => this.ctx.setState({ showTasks: true })}
                 type="copy"
                 operation="copy"
               />
