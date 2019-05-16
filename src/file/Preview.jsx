@@ -322,8 +322,8 @@ class Preview extends React.Component {
     const isPhy = this.props.path && (this.props.path[0].isPhyRoot || this.props.path[0].isUSB || this.props.path[0].isPhy)
 
     const { metadata, hash, size } = this.props.item
-    const photoMagic = ['JPEG', 'GIF', 'PNG', 'BMP', 'HEIC']
-    const videoMagic = ['MP4', 'MOV', 'MKV'] // ['3GP', 'MP4', 'MOV', 'MKV', 'AVI']
+    const photoMagic = ['JPEG', 'GIF', 'PNG', 'BMP']
+    const videoMagic = ['MP4', 'MOV'] // ['3GP', 'MP4', 'MOV', 'MKV', 'AVI']
     const audioMagic = ['MP3', 'FLAC']
     const officeMagic = ['DOCX', 'DOC', 'XLSX', 'XLS', 'PPT', 'PPTX']
     const isPhoto = metadata && photoMagic.includes(metadata.type) && hash
