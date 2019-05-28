@@ -18,8 +18,10 @@ npm start
 
 ### Development 
 
-```
-npm run webpack             // webpack with HMR
-NODE_ENV=dev npm start      // start with devtools
-CONN_MODE=remote npm start  // remote mode
+```bash
+npm run webpack             # webpack with HMR
+NODE_ENV=dev npm start      # start with devtools
+CONN_MODE=remote npm start  # remote mode
+# script of running dev mode on Windows
+$env:NODE_ENV='dev';.\pocket_drive.exe
 ```
