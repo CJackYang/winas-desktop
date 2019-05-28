@@ -49,5 +49,10 @@ nsis:
 linux:
   target:
     - deb
+    - zip
     - AppImage
-  icon: logo/icon.png
+  icon: logo/icon
+
+appImage:
+  systemIntegration: doNotAsk
+

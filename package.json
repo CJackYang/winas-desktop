@@ -11,6 +11,7 @@
     "dist-x64": "./node_modules/.bin/build --config ./electron-builder.yml --win --x64 -p never",
     "dist-ia32": "./node_modules/.bin/build --config ./electron-builder.yml --win --ia32 -p never",
     "dist-mac": "./node_modules/.bin/build --config ./electron-builder.yml --mac -p never",
+    "dist-linux": "./node_modules/.bin/build --config ./electron-builder.yml --linux -p never",
     "eslint": "eslint --fix lib/*.js src/*/*.jsx",
     "cloud": "NODE_ENV=cloud electron .",
     "mocha": "mocha --compilers js:babel-core/register --recursive --sort",
