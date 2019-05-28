@@ -702,6 +702,7 @@
   "Reason": "原因",
   "Force Backup": "加入备份",
   "%s Speed": "%s / 秒",
+  "Backup Diffing": "正在校验文件",
 
   "==== view/Photo.jsx ====": "",
   "New Album": "新建相簿",

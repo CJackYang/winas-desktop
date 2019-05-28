@@ -130,8 +130,8 @@ class BackupCard extends React.PureComponent {
     }
 
     this.onMsg = (event, data) => {
-      const { speed, status, size, completeSize, count, finishCount, restTime, drive, bProgress } = data
-      this.setState({ speed, status, size, completeSize, count, finishCount, restTime, bProgress })
+      const { speed, status, size, completeSize, count, finishCount, restTime, drive, bProgress, hasFileUpload } = data
+      this.setState({ speed, status, size, completeSize, count, finishCount, restTime, bProgress, hasFileUpload })
       if (drive && drive.client) {
         this.setState({ drive })
       }
@@ -516,7 +516,7 @@ class BackupCard extends React.PureComponent {
             <div style={{ fontSize: 12, fontWeight: 500, color: '#FFF' }} key="Working">
               {/* backup speed */}
               <div style={{ fontSize: 18, height: 21, marginTop: 16, display: 'flex', alignItems: 'center' }}>
-                { this.state.speed }
+                { this.state.hasFileUpload ? this.state.speed : i18n.__('Backup Diffing')}
               </div>
 
               {/* backup progress */}
