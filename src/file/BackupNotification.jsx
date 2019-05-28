@@ -159,7 +159,7 @@ class BackupNotification extends React.PureComponent {
                           </div>
                           {/* actions */}
                           {
-                            !!l.isWarning &&
+                            !!l.isWarning && l.error && l.error.code === 'EDELFILE' &&
                             <FlatButton
                               label={i18n.__('Force Backup')}
                               primary
