@@ -382,7 +382,7 @@ class RenderListByRow extends React.Component {
         </div>
         <AutoSizer>
           {({ height, width }) => (
-            <SimpleScrollBar width={width} height={height} >
+            <SimpleScrollBar width={width} height={height - 40} >
               {/* add new backup dir */}
               {
                 isCurrentTopDirs &&
