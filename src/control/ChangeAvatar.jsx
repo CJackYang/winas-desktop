@@ -1,6 +1,8 @@
 import i18n from 'i18n'
 import React from 'react'
 
+import { IconButton } from 'material-ui'
+import RotateIcon from 'material-ui/svg-icons/image/crop-rotate'
 import { LIButton, RSButton } from '../common/Buttons'
 import { CloseIcon, AccountIcon, FailedIcon } from '../common/Svg'
 
@@ -9,7 +11,8 @@ class ChangeAvatar extends React.Component {
     super(props)
 
     this.state = {
-      status: 'upload'
+      status: 'upload',
+      rot: 0
     }
 
     this.resetImage = () => {
@@ -57,7 +60,9 @@ class ChangeAvatar extends React.Component {
         } else if (zoom > 5) {
           zoom = 5
         } else {
-          this.refTransition.style.transform = `translate(${this.dragPosition.left}px,${this.dragPosition.top}px)`
+          const deg = this.state.rot * 90
+          const t = `translate(${this.dragPosition.left}px,${this.dragPosition.top}px) rotate(${deg}deg)`
+          this.refTransition.style.transform = t
         }
         this.refImage.style.zoom = zoom
         this.autoMoveImage()
@@ -78,7 +83,9 @@ class ChangeAvatar extends React.Component {
 
         /* move photo */
         style.transition = ''
-        style.transform = `translate(${this.dragPosition.left}px,${this.dragPosition.top}px)`
+        const deg = this.state.rot * 90
+        const t = `translate(${this.dragPosition.left}px,${this.dragPosition.top}px) rotate(${deg}deg)`
+        style.transform = t
       }
     }
 
@@ -95,7 +102,10 @@ class ChangeAvatar extends React.Component {
       if (this.dragPosition.top > dyMax) this.dragPosition.top = dyMax
       if (this.dragPosition.top < -dyMax) this.dragPosition.top = -dyMax
       this.refTransition.style.transition = 'all 500ms cubic-bezier(0,0,.2, 1)'
-      this.refTransition.style.transform = `translate(${this.dragPosition.left}px,${this.dragPosition.top}px)`
+
+      const deg = this.state.rot * 90
+      const t = `translate(${this.dragPosition.left}px,${this.dragPosition.top}px) rotate(${deg}deg)`
+      this.refTransition.style.transform = t
     }
 
     this.dragOff = () => {
@@ -104,20 +114,60 @@ class ChangeAvatar extends React.Component {
       this.dragPosition.y = 0
       this.autoMoveImage()
     }
+
+    this.rotateImag = () => {
+      this.setState({ rot: this.state.rot + 1 }, () => {
+        const deg = this.state.rot * 90
+        const t = `translate(${this.dragPosition.left}px,${this.dragPosition.top}px) rotate(${deg}deg)`
+        this.refTransition.style.transform = t
+        this.ratio = 1 / this.ratio
+        const canvas = this.refCanvas
+        const content = canvas.getContext('2d')
+        content.rotate(Math.PI / 2)
+      })
+    }
   }
 
   setAvatar () {
     const canvas = this.refCanvas
     const content = canvas.getContext('2d')
-    content.clearRect(0, 0, canvas.width, canvas.height)
+    content.clearRect(-300, -300, 600, 600)
     const img = this.refImage
     const size = 300
     const zoom = img.style.zoom
-    const dWidth = this.ratio >= 1 ? size * zoom * this.ratio : size * zoom
-    const dHeight = this.ratio >= 1 ? size * zoom : size * zoom / this.ratio
-    const dx = this.dragPosition.left - (dWidth - size) / 2
-    const dy = this.dragPosition.top - (dHeight - size) / 2
+
+    // init ratio
+    const ratio = this.state.rot % 2 ? 1 / this.ratio : this.ratio
+
+    const dWidth = ratio >= 1 ? size * zoom * ratio : size * zoom
+    const dHeight = ratio >= 1 ? size * zoom : size * zoom / ratio
+    let left
+    let top
+    switch (this.state.rot % 4) {
+      case 0:
+        left = this.dragPosition.left
+        top = this.dragPosition.top
+        break
+      case 1:
+        left = this.dragPosition.top
+        top = -this.dragPosition.left - size
+        break
+      case 2:
+        left = -this.dragPosition.left - size
+        top = -this.dragPosition.top - size
+        break
+      case 3:
+        left = -this.dragPosition.top - size
+        top = this.dragPosition.left
+        break
+
+      default:
+        break
+    }
+    const dx = left - (dWidth - size) / 2
+    const dy = top - (dHeight - size) / 2
     content.drawImage(img, dx, dy, dWidth, dHeight)
+
     const file = Buffer.from(canvas.toDataURL().split(',')[1], 'base64')
     this.props.phi.req('setAvatar', file, (err, res) => {
       if (err || !res) this.setState({ status: 'failed' })
@@ -334,10 +384,20 @@ class ChangeAvatar extends React.Component {
             <RSButton
               alt
               label={i18n.__('Re-upload')}
-              onClick={() => this.setState({ status: 'upload' })}
+              onClick={() => this.setState({ status: 'upload', rot: 0 })}
             />
           }
         </div>
+        {
+          this.state.status === 'crop' &&
+            <div style={{ position: 'absolute', top: 64, right: 8 }}>
+              <IconButton
+                onClick={this.rotateImag}
+              >
+                <RotateIcon />
+              </IconButton>
+            </div>
+        }
       </div>
     )
   }
