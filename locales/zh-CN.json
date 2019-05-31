@@ -883,6 +883,7 @@
   "EEXIST": "文件或文件夹已存在",
   "ECONNRESET": "无法连接到设备",
   "ECONNREFUSED": "无法连接到设备",
+  "EHOSTUNREACH": "无法连接到设备",
   "ENETLOST":"网络连接断开",
   "ENETUNREACH": "网络连接断开",
   "ECONNEND": "网络连接错误",

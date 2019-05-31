@@ -10,6 +10,8 @@ const convert = (code) => {
       return i18n.__('ECONNREFUSED')
     case 'ENETUNREACH':
       return i18n.__('ENETUNREACH')
+    case 'EHOSTUNREACH':
+      return i18n.__('EHOSTUNREACH')
     case 'ENOTFOUND':
       return i18n.__('ENETLOST')
     case 'ECONNEND':
