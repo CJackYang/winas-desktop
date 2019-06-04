@@ -230,8 +230,8 @@ class PhotoDetail extends React.Component {
             onClick={(e) => { e.preventDefault(); e.stopPropagation() }}
           >
             {
-              this.state.detailPath &&
-                <img
+              this.state.detailPath
+                ? <img
                   height={this.exifOrientation % 2 === 0 ? this.photoWidth : this.photoHeight}
                   width={this.exifOrientation % 2 === 0 ? this.photoHeight : this.photoWidth}
                   alt="DetailImage"
@@ -239,7 +239,7 @@ class PhotoDetail extends React.Component {
                   ref={ref => (this.refDetailImage = ref)}
                   style={{ zoom: 1, transition: 'all 450ms' }}
                   draggable={false}
-                />
+                /> : <CircularProgress size={24} thickness={2} />
             }
           </div>
         </div>
