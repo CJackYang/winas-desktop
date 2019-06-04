@@ -94,7 +94,7 @@ class Home extends Base {
       if (!this.state.path) return
       const rUUID = this.state.path[0] && this.state.path[0].uuid
       const dUUID = this.state.path[0] && this.state.path[this.state.path.length - 1].uuid
-      if (!rUUID || !dUUID || this.state.path.length === 0) {
+      if (!rUUID || !dUUID || this.state.path.length === 1) {
         // home or public
         this.setState({ loading: true, showSearch: false })
         const drives = this.ctx.props.apis && this.ctx.props.apis.drives && this.ctx.props.apis.drives.data
