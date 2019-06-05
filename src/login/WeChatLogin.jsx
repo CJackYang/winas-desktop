@@ -40,9 +40,9 @@ class WeChatLogin extends React.Component {
       this.setState({ error: '' }, () => {
         this.WxLogin({
           id: 'login_container',
-          appid: 'wxd7e08af781bea6a2',
+          appid: 'wx73bd1e266af586de',
           scope: 'snsapi_login',
-          redirect_uri: 'http%3A%2F%2Fwxlogin.siyouqun.com',
+          redirect_uri: 'http%3A%2F%2Fwxlogin.aidingnan.com',
           state: 'uuid',
           language: 'zh_CN',
           style: '',
