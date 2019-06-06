@@ -328,33 +328,8 @@ class Fruitmix extends EventEmitter {
         r = this.aget('files', { class: 'video', places: args.places })
         break
 
-      /* device api */
-      case 'device':
-        r = this.aget('device')
-        break
-
-      case 'cpus':
-        r = this.aget('device/cpuInfo')
-        break
-
-      case 'network':
-        r = this.aget('device/net')
-        break
-
-      case 'memory':
-        r = this.aget('device/memInfo')
-        break
-
       case 'power':
         r = this.apatch('boot', { state: args.state })
-        break
-
-      case 'speed':
-        r = this.aget('device/speed')
-        break
-
-      case 'sleep':
-        r = this.aget('device/sleep')
         break
 
       /* Plugin API */
@@ -536,7 +511,6 @@ class Fruitmix extends EventEmitter {
     this.request('account')
     this.request('users')
     this.request('stats')
-    this.request('device')
     this.requestAsync('drives').then((drives) => {
       const drive = drives.find(d => d.tag === 'home')
       setTimeout(() => this.request('listNavDir', { driveUUID: drive.uuid, dirUUID: drive.uuid }), 450)
