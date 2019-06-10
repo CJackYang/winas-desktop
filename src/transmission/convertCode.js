@@ -14,8 +14,14 @@ const convert = (code) => {
       return i18n.__('EHOSTUNREACH')
     case 'ENOTFOUND':
       return i18n.__('ENETLOST')
+    case 'ECONNABORTED':
+      return i18n.__('ECONNABORTED')
     case 'ECONNEND':
       return i18n.__('ECONNEND')
+    case 'ETIMEDOUT':
+      return i18n.__('ETIMEDOUT')
+    case 'ETIMEOUT':
+      return i18n.__('ETIMEOUT')
     case 'ENOENT':
       return i18n.__('ENOENT')
     case 'EPERM':
