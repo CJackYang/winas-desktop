@@ -1,6 +1,6 @@
 import React from 'react'
 import i18n from 'i18n'
-import { ipcRenderer } from 'electron'
+import { ipcRenderer, remote } from 'electron'
 import { AutoSizer } from 'react-virtualized'
 import { Paper, Menu } from 'material-ui'
 import DeleteSvg from 'material-ui/svg-icons/action/delete'
@@ -211,7 +211,8 @@ class TrsContainer extends React.Component {
 
     this.open = () => {
       if (Array.isArray(this.state.tasks) && this.state.tasks[0] && this.state.tasks[0].downloadPath) {
-        ipcRenderer.send('OPEN_TRANSMISSION', this.state.tasks[0].downloadPath)
+        const entryPath = remote.require('path').join(this.state.tasks[0].downloadPath, this.state.tasks[0].name)
+        ipcRenderer.send('OPEN_TRANSMISSION', entryPath)
       }
     }
 
