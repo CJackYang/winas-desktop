@@ -3,6 +3,7 @@ import i18n from 'i18n'
 
 import FlatButton from '../common/FlatButton'
 import prettySize from '../common/prettySize'
+import ConfirmDialog from '../common/ConfirmDialog'
 import CircularLoading from '../common/CircularLoading'
 
 class Disk extends React.PureComponent {
@@ -29,17 +30,25 @@ class Disk extends React.PureComponent {
     )
   }
 
-  renderFailed () {
+  renderFailed (error) {
+    const isUnauthorized = error && error.status === 401
     return (
       <div style={{ width: '100%', height: 200 }} className="flexCenter" >
         {i18n.__('Error in Base Text')}
+        {/* show dialog when token expired */}
+        <ConfirmDialog
+          open={isUnauthorized}
+          onConfirm={() => this.props.logout()}
+          title={i18n.__('Token Expired')}
+          text={i18n.__('Token Expired Text')}
+        />
       </div>
     )
   }
 
   renderStorage () {
     const { space, stats, error } = this.state
-    if (error) return this.renderFailed()
+    if (error) return this.renderFailed(error)
     if (!space || !stats) return this.renderLoading()
 
     const { audio, document, image, video } = stats
