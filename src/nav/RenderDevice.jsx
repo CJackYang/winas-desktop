@@ -120,6 +120,7 @@ class Disk extends React.PureComponent {
 
   render () {
     const name = this.props.selectedDevice.name || i18n.__('Default Product Name')
+    const { isCloud } = this.props
     return (
       <div style={{ width: 260, height: 339, marginTop: -8, overflow: 'hidden' }}>
         <div style={{ height: 56, position: 'relative', paddingLeft: 24, paddingTop: 16 }}>
@@ -127,7 +128,7 @@ class Disk extends React.PureComponent {
             {name}
           </div>
           <div style={{ height: 22, fontSize: 12, color: 'rgba(14,5,10,.29)' }}>
-            {i18n.__('Current Device')}
+            { isCloud ? i18n.__('Connected Via Cloud') : i18n.__('Connected Via LAN') }
           </div>
           <div style={{ position: 'absolute', top: 16, right: 8 }}>
             <FlatButton

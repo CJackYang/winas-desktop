@@ -2,11 +2,11 @@ import i18n from 'i18n'
 import React from 'react'
 import Promise from 'bluebird'
 import { AutoSizer } from 'react-virtualized'
-import { MenuItem } from 'material-ui'
+import { MenuItem, FlatButton } from 'material-ui'
 import Device from '../login/Device'
 import ScrollBar from '../common/ScrollBar'
 import { LIButton } from '../common/Buttons'
-import { CloseIcon, RefreshIcon, PublishIcon } from '../common/Svg'
+import { CloseIcon, RefreshIcon } from '../common/Svg'
 import CircularLoading from '../common/CircularLoading'
 
 class ChangeDevice extends React.Component {
@@ -101,17 +101,28 @@ class ChangeDevice extends React.Component {
 
   renderRow ({ style, key, device }) {
     const isCurrent = this.props.selectedDevice && this.props.selectedDevice.mdev.deviceSN === device.sn
+    const isLoading = !!this.state.loggingDevice
     return (
       <div style={style} key={key}>
         <div style={{ position: 'relative' }}>
-          <MenuItem onClick={() => this.selectDevice(device)} disabled={isCurrent || !!this.state.loggingDevice} >
-            <Device {...this.props} cdev={device} slDevice={this.slDevice} />
+          <MenuItem onClick={() => this.selectDevice(device)} disabled={isCurrent || isLoading} >
+            <Device {...this.props} cdev={device} slDevice={this.slDevice} type={'CHANGEDEVICE'} />
           </MenuItem>
-          <div style={{ position: 'absolute', right: 32, top: 32 }}>
+          <div style={{ position: 'absolute', right: isLoading ? 32 : 16, top: isLoading ? 32 : 22 }}>
+            {/* retry connecting to device */}
             {
-              this.state.loggingDevice
+              isLoading
                 ? <CircularLoading />
-                : isCurrent ? i18n.__('Current Logged Device') : ''}
+                : isCurrent
+                  ? (
+                    <FlatButton
+                      primary
+                      onClick={() => this.selectDevice(this.props.selectedDevice)}
+                    >
+                      {i18n.__('Retry to Connect')}
+                    </FlatButton>
+                  ) : ''
+            }
           </div>
         </div>
       </div>
@@ -158,13 +169,6 @@ class ChangeDevice extends React.Component {
             </LIButton>
           }
           <div style={{ flex: 1 }} />
-          {/* force connecting via cloud */}
-          {
-            !this.state.loggingDevice &&
-            <LIButton style={{ marginRight: 12 }} onClick={() => this.selectDevice(this.props.selectedDevice, true)} >
-              <PublishIcon />
-            </LIButton>
-          }
           {/* refresh */}
           {
             !this.state.loggingDevice &&

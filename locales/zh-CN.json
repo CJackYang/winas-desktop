@@ -1296,6 +1296,9 @@
   "Bind Email": "绑定邮箱",
   "Withdraw Menu": "折叠菜单",
   "Draw Menu": "展开菜单",
+  "Connected Via Cloud":"外网连接中",
+  "Connected Via LAN":"Wi-Fi直连中（高速）",
+  "Retry to Connect": "重新连接",
 
   "==== commom/HelpMsg.jsx ====": "",
   "Home Help Header": "私有盘",
