@@ -21,9 +21,10 @@ const getType = (item) => {
 
 const getPath = (path) => {
   const newPath = []
+  console.log('getPath', path)
   path.map((item, index) => {
     if (!index) {
-      newPath.push(item.type === 'publicRoot' ? i18n.__('Public Drive') : item.type === 'home' ? i18n.__('Home Title') : item.name)
+      newPath.push(item.type === 'public' ? i18n.__('Public Drive') : item.type === 'home' ? i18n.__('Home Title') : item.name)
     } else {
       newPath.push(item.name)
     }
