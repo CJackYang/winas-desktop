@@ -1,6 +1,5 @@
 import i18n from 'i18n'
 import React from 'react'
-import Promise from 'bluebird'
 import { ipcRenderer } from 'electron'
 import { FlatButton, Menu, Popover, IconButton } from 'material-ui'
 
@@ -22,7 +21,6 @@ import SearchButton from '../common/Search'
 import prettySize from '../common/prettySize'
 import WindowAction from '../common/WindowAction'
 import DialogOverlay from '../common/PureDialog'
-import UpdateFirmDialog from '../settings/UpdateFirmDialog'
 import { BackIcon, WisnucLogo, DeviceIcon, ArrowDownIcon, CloseIcon, PDFIcon, WORDIcon, EXCELIcon, PPTIcon, PhotoIcon, VideoIcon, AudioIcon, ExitSearchIcon, MenuIcon } from '../common/Svg'
 
 class NavViews extends React.Component {
@@ -95,14 +93,6 @@ class NavViews extends React.Component {
     }
 
     this.showFirmUpdate = true
-
-    this.checkFirmWareAsync = async () => {
-      await Promise.delay(1000)
-      const res = await this.props.apis.pureRequestAsync('firmwareReady')
-      if (res && res.error === '0' && res.result && res.result.tag_name) {
-        this.setState({ newRel: res.result })
-      }
-    }
 
     this.init = () => {
       this.navTo('home')
@@ -324,19 +314,6 @@ class NavViews extends React.Component {
             />
           }
         </DialogOverlay>
-
-        <DialogOverlay open={!!this.state.newRel} onRequestClose={() => this.setState({ newRel: null })} modal transparent >
-          {
-            this.state.newRel &&
-            <UpdateFirmDialog
-              {...this.props}
-              rel={this.state.newRel}
-              device={this.props.apis.device.data}
-              onRequestClose={() => this.setState({ newRel: null })}
-            />
-          }
-        </DialogOverlay>
-
       </div>
     )
   }

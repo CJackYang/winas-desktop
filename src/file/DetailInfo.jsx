@@ -40,7 +40,7 @@ const getResolution = (height, width) => {
   let res = height * width
   if (res > 100000000) {
     res = Math.ceil(res / 100000000)
-    return i18n.__('Get 100 Million Resolution {{res}} {{alt}}}', { res, alt: res * 100, height, width })
+    return i18n.__('Get 100 Million Resolution {{res}} {{alt}}', { res, alt: res * 100, height, width })
   } else if (res > 10000) {
     res = Math.ceil(res / 10000)
     return i18n.__('Get 0.01 Million Resolution {{res}} {{alt}}', { res, alt: res / 100, height, width })
