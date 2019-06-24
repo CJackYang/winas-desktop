@@ -235,7 +235,7 @@ class BackupCard extends React.PureComponent {
           { i18n.__('Manage Backup Dir') }
           <div style={{ flexGrow: 1 }} />
           <div style={{ color: 'rgba(0,0,0,.38)', marginRight: 16 }}>
-            { i18n.__('%s Items', topDirs.length) }
+            { i18n.__n('%s Items', topDirs.length) }
           </div>
           <ChevronRightIcon style={{ color: 'rgba(0,0,0,.38)', height: 16, width: 16 }} />
         </div>
@@ -277,7 +277,7 @@ class BackupCard extends React.PureComponent {
           </LIButton>
           <div style={{ marginLeft: 8 }}> { i18n.__('Manage Backup Dir') } </div>
           <div style={{ flexGrow: 1 }} />
-          <div style={{ marginRight: 24 }}> { i18n.__('%s Items', this.state.topDirs.length) } </div>
+          <div style={{ marginRight: 24 }}> { i18n.__n('%s Items', this.state.topDirs.length) } </div>
         </div>
         <div style={{ height: 8 }} />
         <SimpleScrollBar height={144} width={306} >

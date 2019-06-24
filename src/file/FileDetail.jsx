@@ -12,7 +12,6 @@ import {
 
 const getType = (item) => {
   const type = item && item.type
-  if (item && item.isUSB) return i18n.__('USB Menu Name')
   if (type === 'public') return i18n.__('Public Drive')
   if (type === 'directory') return i18n.__('Directory')
   if (type === 'file') return i18n.__('File')
@@ -107,11 +106,11 @@ class FileDetail extends React.PureComponent {
   transformLocation (loc) {
     switch (loc) {
       case 'home':
-        return '我的空间'
+        return i18n.__('Home Title')
       case 'built-in':
-        return '共享空间'
+        return i18n.__('Public Title')
       case 'backup':
-        return '备份空间'
+        return i18n.__('Backup Title')
       default:
         return ''
     }

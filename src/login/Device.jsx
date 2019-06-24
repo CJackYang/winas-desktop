@@ -44,19 +44,6 @@ class Device extends React.Component {
     return (this.device && this.device.systemStatus()) || 'probing'
   }
 
-  renderIsOwner () {
-    if (!this.props.cdev) return null
-    const { inviteStatus, accountStatus, type } = this.props.cdev
-    if (type === 'owner') return i18n.__('Admin User')
-    if (inviteStatus === 'accept' && accountStatus === '1') return i18n.__('Normal User')
-    if (inviteStatus === 'accept' && accountStatus !== '1') return i18n.__('Account Deleted')
-    if (inviteStatus === 'pending' && accountStatus === '1') return i18n.__('Need Check Invitation')
-    if (inviteStatus === 'pending' && accountStatus !== '1') return i18n.__('Inactive Invitaion')
-    if (inviteStatus === 'reject' && accountStatus === '1') return i18n.__('Rejected Invitaion')
-    if (inviteStatus === 'reject' && accountStatus !== '1') return i18n.__('Rejected And Inactive Invitaion')
-    return null
-  }
-
   isEnabled () {
     const { type, cdev } = this.props
     const status = this.systemStatus()

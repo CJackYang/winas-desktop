@@ -1,23 +1,46 @@
 /*
  * node test/checkI18n.js
  */
-
+/* eslint-disable camelcase */
 const fs = require('fs')
-const path= require('path')
+const path = require('path')
 const child = require('child_process')
 
 const string = 'i18n.__'
 const dir = './src ./lib'
-const lines_src = child.execSync(`grep -r ${string} ${dir}`).toString().split('\n').map(l => l.trim()).filter(l => l.length)
+const lines_src = child.execSync(`grep -r ${string} ${dir}`).toString().split('\n').map(l => l.trim())
+  .filter(l => l.length)
 const keys_src = lines_src.map(l => l.split('i18n.')).join('__').split('__')
-  .filter(l => l.startsWith('(\'') || l.startsWith('n(\'')).map(l => l.split('\'')[1])
+  .filter(l => l.startsWith('(\'') || l.startsWith('n(\''))
+  .map(l => l.split('\'')[1])
 const unique_src = new Set([...keys_src])
 
 const entries = fs.readdirSync('./locales').map(p => path.join('./locales', p)).slice(1, 2)
 
-entries.forEach(filePath => {
+// remove lines not in source
+// const rmNotSrc = (filePath, not_src) => {
+//   const lines_loc = fs.readFileSync(filePath).toString().split('\n')
+//   const linesWithKey = lines_loc.map((line) => {
+//     if (line.trim().length) {
+//       const key = line.split('"')[1]
+//       return [line, key]
+//     }
+//     return [line, '']
+//   })
+//   for (let i = linesWithKey.length - 1; i >= 0; i--) {
+//     if (not_src.includes(linesWithKey[i][1])) {
+//       linesWithKey.splice(i, 1)
+//     }
+//   }
+//   const newLines = linesWithKey.map(l => l[0]).join('\n')
+//   console.log(newLines)
+//   fs.writeFileSync(`${filePath}-new`, newLines)
+// }
+
+entries.forEach((filePath) => {
   console.log('===== in', filePath, '=====')
-  const lines_loc = fs.readFileSync(filePath).toString().split('\n').map(l => l.trim()).filter(l => l.length)
+  const lines_loc = fs.readFileSync(filePath).toString().split('\n').map(l => l.trim())
+    .filter(l => l.length)
   const filtered_loc = lines_loc.filter(l => !(/====/.test(l)))
   const keys_loc = filtered_loc.map(l => l.split('"')[1]).filter(k => !!k)
   const unique_loc = new Set([...keys_loc]);
@@ -29,10 +52,13 @@ entries.forEach(filePath => {
   const dup_loc = [...keys_loc].filter((l, index) => keys_loc.findIndex(k => k === l) < index).filter(k => !['one', 'other'].includes(k))
 
   console.log('keys in src but not in locale:\n', not_loc.map(l => '"'.concat(l).concat('"')).join(': "",\n'), ': "",\n')
-  // console.log('keys in locale but not in src:\n', not_src, '\n')
+  console.log('keys in locale but not in src:\n', not_src, '\n')
+  // rmNotSrc(filePath, not_src)
   console.log('lines dupped in locale:\n', dup_loc, '\n')
 })
 
-const all = child.execSync(`grep -r '' ${dir}`).toString().split('\n').map(l => l.trim()).filter(l => l.length)
+/* check chinese in source code */
+const all = child.execSync(`grep -r '' ${dir}`).toString().split('\n').map(l => l.trim())
+  .filter(l => l.length)
 const chinese = all.filter(l => /[\u4E00-\u9FFF\u3400-\u4dbf\uf900-\ufaff\u3040-\u309f\uac00-\ud7af]+/.test(l))
-// console.log('Chinese line in src:\n', chinese, '\n')
+console.log('Chinese line in src:\n', chinese, '\n')

@@ -134,7 +134,7 @@ class Tasks extends React.Component {
               { entries.length > 1 && i18n.__('And Other %s Items', entries.length) }
               <div style={{ flexGrow: 1 }} />
               {
-                finished ? i18n.__('Finished') : error.length ? i18n.__('Task Failed')
+                finished ? i18n.__('Task Finished') : error.length ? i18n.__('Task Failed')
                   : conflict.length ? i18n.__('Task Conflict Text') : ''
               }
             </div>
