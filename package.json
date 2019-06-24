@@ -8,6 +8,7 @@
   "main": "main.js",
   "scripts": {
     "i18n": "node test/checkI18n.js",
+    "en": "node test/i18nCreateNewEN-US.js",
     "dist-x64": "./node_modules/.bin/build --config ./electron-builder.yml --win --x64 -p never",
     "dist-ia32": "./node_modules/.bin/build --config ./electron-builder.yml --win --ia32 -p never",
     "dist-mac": "./node_modules/.bin/build --config ./electron-builder.yml --mac -p never",
