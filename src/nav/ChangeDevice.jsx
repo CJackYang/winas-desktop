@@ -197,7 +197,7 @@ class ChangeDevice extends React.Component {
 
         <div style={{ fontSize: 28, display: 'flex', alignItems: 'center', paddingLeft: 80, marginBottom: 36 }} >
           { this.state.loggingDevice ? i18n.__('Connecting to Device') : this.state.failed ? i18n.__('ErrorText: Connect Failed')
-            : i18n.__('Change Device') }
+            : i18n.__('Change Device Title') }
         </div>
 
         {

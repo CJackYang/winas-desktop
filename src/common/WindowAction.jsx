@@ -1,7 +1,7 @@
 import React from 'react'
+import { IconButton } from 'material-ui'
 import { ipcRenderer, remote } from 'electron'
 import EventListener from 'react-event-listener'
-import { IconButton } from 'material-ui'
 import { WinMiniIcon, WinFullIcon, WinNormalIcon, CloseIcon } from '../common/Svg'
 
 const styles = {

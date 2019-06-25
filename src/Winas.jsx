@@ -161,6 +161,7 @@ class Winas extends React.Component {
 
     const nodrag = { position: 'absolute', top: 0, WebkitAppRegion: 'no-drag' }
     const isSmall = this.state.view === 'login'
+
     return (
       <MuiThemeProvider muiTheme={this.state.theme}>
         <div
@@ -182,6 +183,7 @@ class Winas extends React.Component {
             <div style={Object.assign({ left: 0, height: 5, width: '100%' }, nodrag)} />
             <div style={Object.assign({ left: 0, height: 110, width: 5 }, nodrag)} />
             <div style={Object.assign({ right: 0, height: 110, width: 5 }, nodrag)} />
+
             {/* Account */}
             {
               this.state.account && this.state.view === 'device' &&

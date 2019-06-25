@@ -46,7 +46,7 @@ class Account extends React.Component {
             <AccountIcon avatarUrl={avatarUrl} size={72} />
             <div style={{ position: 'absolute', top: 55, left: 0, height: 17, width: 72, overflow: 'hidden' }}>
               <div style={{ height: 72, width: 72, marginTop: -55, borderRadius: 36, backgroundColor: 'rgba(0,0,0,.87)' }} />
-              <div style={{ color: '#FFF', marginTop: -17, height: 17 }} className="flexCenter">
+              <div style={{ color: '#FFF', marginTop: -17, height: 17, fontSize: 12 }} className="flexCenter">
                 { i18n.__('Change Avatar') }
               </div>
             </div>

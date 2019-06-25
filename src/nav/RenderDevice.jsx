@@ -139,7 +139,7 @@ class Disk extends React.PureComponent {
           <div style={{ height: 22, fontSize: 12, color: 'rgba(14,5,10,.29)' }}>
             { isCloud ? i18n.__('Connected Via Cloud') : i18n.__('Connected Via LAN') }
           </div>
-          <div style={{ position: 'absolute', top: 16, right: 8 }}>
+          <div style={{ position: 'absolute', top: 8, right: 8, height: 24 }}>
             <FlatButton
               primary
               label={i18n.__('Change Device')}

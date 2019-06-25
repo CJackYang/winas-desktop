@@ -488,7 +488,7 @@ class NavViews extends React.Component {
           </div>
           {
             !this.state.searchMode &&
-            <div style={{ height: 72, fontSize: 24, fontWeight: 500, alignItems: 'center', display: 'flex' }} >
+            <div style={{ height: 72, fontSize: 21, fontWeight: 500, alignItems: 'center', display: 'flex' }} >
               {i18n.__('Default Product Name')}
             </div>
           }

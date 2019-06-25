@@ -6,13 +6,12 @@ import i18n from 'i18n'
 import Winas from './Winas'
 
 /* i18n config */
-// const lang = navigator.language
+const lang = navigator.language
 i18n.configure({
   updateFiles: false,
   locales: ['en-US', 'zh-CN'],
   directory: remote.require('path').join(remote.app.getAppPath(), 'locales'),
-  defaultLocale: 'zh-CN'
-  // defaultLocale: /zh/.test(lang) ? 'zh-CN' : 'en-US'
+  defaultLocale: /zh/.test(lang) ? 'zh-CN' : 'en-US'
 })
 
 /* render method */
@@ -28,10 +27,10 @@ window.addEventListener('drop', e => e.preventDefault(), true)
 ipcRenderer.on('CONFIG_UPDATE', (event, config) => {
   if (process.env.NODE_ENV === 'dev') console.log('CONFIG_UPDATE', config)
   global.config = config
-  /*
+
   if (config.global && config.global.locales) i18n.setLocale(config.global.locales)
   else i18n.setLocale(/zh/.test(lang) ? 'zh-CN' : 'en-US')
-  */
-  i18n.setLocale('zh-CN')
+
+  // i18n.setLocale('en-US')
   render()
 })

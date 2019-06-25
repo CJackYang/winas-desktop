@@ -444,7 +444,7 @@ class BackupCard extends React.PureComponent {
                     >
                       {
                         i18n.__(
-                          'Confirm Delete Backup Dir Title %s',
+                          'Confirm Delete Backup Dir Title',
                           this.state.confirmDelDir && this.state.confirmDelDir.name
                         )
                       }
@@ -531,7 +531,7 @@ class BackupCard extends React.PureComponent {
             </div>
           )
         }
-        {/* Add Backup Directroy  */}
+        {/* Add Backup Directory  */}
         {
           !disabled &&
             <div
@@ -550,7 +550,7 @@ class BackupCard extends React.PureComponent {
                 style={{ width: '100%' }}
                 buttonStyle={{ width: '100%', textAlign: 'left' }}
                 primary
-                label={i18n.__('Add Backup Directroy')}
+                label={i18n.__('Add Backup Directory')}
                 labelStyle={{ fontSize: 12, width: '100%' }}
                 onClick={e => this.handleClickAdd(e, drive)}
                 onDoubleClick={(e) => { e.stopPropagation(); e.preventDefault() }}

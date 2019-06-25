@@ -340,7 +340,7 @@ class ChangeAvatar extends React.Component {
       >
         <div style={{ height: 60, position: 'relative', paddingLeft: 24, display: 'flex', alignItems: 'center' }} >
           <div style={{ fontSize: 16, fontWeight: 500 }}>
-            { i18n.__('Change Avatar') }
+            { i18n.__('Change Avatar Title') }
           </div>
           <div style={{ flexGrow: 1 }} />
           <LIButton iconStyle={{ width: 18, height: 18 }} onClick={this.props.onRequestClose}>

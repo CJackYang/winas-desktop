@@ -1,7 +1,9 @@
-import React from 'react'
 import i18n from 'i18n'
-import { Checkbox, MenuItem } from 'material-ui'
+import React from 'react'
+import { ipcRenderer } from 'electron'
 import { AutoSizer } from 'react-virtualized'
+import { Checkbox, MenuItem, Popover, Menu } from 'material-ui'
+
 import ScrollBar from '../common/ScrollBar'
 import AccountIcon from '../common/AccountIcon'
 import Dialog from '../common/PureDialog'
@@ -145,6 +147,17 @@ class WisnucLogin extends React.Component {
         }
       })
     }
+
+    // method to handle locales
+    this.handleChange = (type) => {
+      ipcRenderer.send('SETCONFIG', { locales: type })
+      this.setState({ open: false })
+    }
+
+    this.toggleMenu = (event) => {
+      if (!this.state.open && event && event.preventDefault) event.preventDefault()
+      this.setState({ open: event !== 'clickAway' && !this.state.open, anchorEl: event.currentTarget })
+    }
   }
 
   componentDidMount () {
@@ -271,6 +284,9 @@ class WisnucLogin extends React.Component {
 
     const isDelUser = this.state.switchAccount === 'delete'
     const users = isDelUser ? this.state.accounts : [...this.state.accounts, { type: 'add' }]
+
+    const lan = (global.config && global.config.global && global.config.global.locales) ||
+      (navigator.language === 'zh-CN' ? 'zh-CN' : 'en-US')
 
     return (
       <div style={{ width: '100%', zIndex: 100, height: 380, position: 'relative' }} >
@@ -435,6 +451,41 @@ class WisnucLogin extends React.Component {
           </div>
         </div>
 
+        {/* language settings */}
+        <div style={{
+          position: 'absolute',
+          right: 0,
+          bottom: 4,
+          display: 'flex',
+          alignItems: 'center'
+        }}>
+          <FlatButton
+            label={lan === 'en-US' ? '🇬🇧' : '🇨🇳'}
+            onClick={this.toggleMenu}
+          />
+          {/* menu */}
+          <Popover
+            open={this.state.open}
+            anchorEl={this.state.anchorEl}
+            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+            targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+            onRequestClose={() => this.setState({ open: false })}
+          >
+            <Menu>
+              <MenuItem
+                style={{ fontSize: 13 }}
+                primaryText="🇨🇳  简体中文"
+                onClick={() => this.handleChange('zh-CN')}
+              />
+              <MenuItem
+                style={{ fontSize: 13 }}
+                primaryText="🇬🇧  English"
+                onClick={() => this.handleChange('en-US')}
+              />
+            </Menu>
+          </Popover>
+        </div>
+
         {/* switch account */}
         {
           this.state.switchAccount &&
@@ -461,7 +512,7 @@ class WisnucLogin extends React.Component {
                 <div style={{ marginLeft: 80 }}>
                   <FlatButton
                     primary
-                    label={isDelUser ? i18n.__('Finish') : i18n.__('Remove Account')}
+                    label={isDelUser ? i18n.__('Return') : i18n.__('Remove Account')}
                     onClick={() => (
                       isDelUser ? (this.state.accounts.length ? this.setState({ switchAccount: true })
                         : this.setState({ switchAccount: false, status: 'phone', pn: '' })

@@ -405,7 +405,7 @@ class RenderListByRow extends React.Component {
                       />
                     </div>
                     <div style={{ color: enabled ? '#009688' : 'rgba(0,0,0,0.54)' }}>
-                      { i18n.__('Add Backup Directroy')}
+                      { i18n.__('Add Backup Directory')}
                     </div>
                   </div>
               }

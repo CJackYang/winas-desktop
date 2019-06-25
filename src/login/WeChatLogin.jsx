@@ -166,7 +166,7 @@ class WeChatLogin extends React.Component {
         </div>
 
         {/* footer */}
-        <div
+        {/* <div
           className="flexCenter"
           style={{ position: 'absolute', bottom: 0, height: 40, width: '100%', fontSize: 12, color: 'rgba(0,0,0,.38)' }}
         >
@@ -174,7 +174,7 @@ class WeChatLogin extends React.Component {
           <div style={{ marginLeft: 20 }}>
             {i18n.__('Client Version %s', global.config && global.config.appVersion)}
           </div>
-        </div>
+        </div> */}
       </div>
     )
   }
