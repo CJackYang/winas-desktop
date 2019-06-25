@@ -2,7 +2,7 @@ import i18n from 'i18n'
 import React from 'react'
 import { ipcRenderer } from 'electron'
 import { AutoSizer } from 'react-virtualized'
-import { Checkbox, MenuItem, Popover, Menu } from 'material-ui'
+import { Checkbox, MenuItem, Popover, Menu, IconButton } from 'material-ui'
 
 import ScrollBar from '../common/ScrollBar'
 import AccountIcon from '../common/AccountIcon'
@@ -11,7 +11,7 @@ import FlatButton from '../common/FlatButton'
 import { isPhoneNumber } from '../common/validate'
 import { RRButton, TFButton, LoginTF } from '../common/Buttons'
 import { EyeOpenIcon, EyeOffIcon, WinCloseIcon, CheckBoxOutlineIcon,
-  ArrowDownIcon, WeChatIcon, CloseIcon } from '../common/Svg'
+  ArrowDownIcon, WeChatIcon, CloseIcon, ChinaFlag, UKFlag } from '../common/Svg'
 
 let firstLogin = true
 
@@ -459,10 +459,9 @@ class WisnucLogin extends React.Component {
           display: 'flex',
           alignItems: 'center'
         }}>
-          <FlatButton
-            label={lan === 'en-US' ? '🇬🇧' : '🇨🇳'}
-            onClick={this.toggleMenu}
-          />
+          <IconButton onClick={this.toggleMenu} iconStyle={{ width: 18, height: 18 }} style={{ marginBottom: -8 }}>
+            { lan === 'en-US' ? UKFlag : ChinaFlag }
+          </IconButton>
           {/* menu */}
           <Popover
             open={this.state.open}
@@ -474,12 +473,16 @@ class WisnucLogin extends React.Component {
             <Menu>
               <MenuItem
                 style={{ fontSize: 13 }}
-                primaryText="🇨🇳  简体中文"
+                leftIcon={ChinaFlag}
+                iconStyle={{ width: 18, height: 18 }}
+                primaryText="简体中文"
                 onClick={() => this.handleChange('zh-CN')}
               />
               <MenuItem
                 style={{ fontSize: 13 }}
-                primaryText="🇬🇧  English"
+                iconStyle={{ width: 18, height: 18 }}
+                leftIcon={UKFlag}
+                primaryText="English"
                 onClick={() => this.handleChange('en-US')}
               />
             </Menu>
