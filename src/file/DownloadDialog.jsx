@@ -116,7 +116,10 @@ class DownloadDialog extends React.PureComponent {
                       }}
                     >
                       <div
-                        style={{ maxWidth: isTask ? 'calc(100% - 100px)' : '100%' }}
+                        style={{
+                          maxWidth: isTask ? 'calc(100% - 100px)' : '100%',
+                          marginRight: 4
+                        }}
                         className="text"
                       >
                         { entry.name }

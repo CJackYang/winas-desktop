@@ -13,13 +13,15 @@ import SimpleScrollBar from '../common/SimpleScrollBar'
 
 const week = () => [i18n.__('Sunday'), i18n.__('Monday'), i18n.__('Tuesday'), i18n.__('Wednesday'), i18n.__('Thursday'), i18n.__('Friday'), i18n.__('Saturday')]
 
+const addZero = num => (num < 10 ? `0${num}` : num)
+
 const phaseDate = (time, type) => {
   const a = new Date(time)
   const year = a.getFullYear()
-  const month = a.getMonth() + 1
-  const date = a.getDate()
-  const hour = a.getHours()
-  const min = a.getMinutes()
+  const month = addZero(a.getMonth() + 1)
+  const date = addZero(a.getDate())
+  const hour = addZero(a.getHours())
+  const min = addZero(a.getMinutes())
   if (type === 'date') return i18n.__('Parse Date %s %s %s', year, month, date)
   if (type === 'week') return week()[a.getDay()]
   if (type === 'time') return `${hour} : ${min}`

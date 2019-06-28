@@ -125,12 +125,13 @@ class Tasks extends React.Component {
                   overflow: 'hidden',
                   whiteSpace: 'nowrap',
                   textOverflow: 'ellipsis',
-                  maxWidth: entries.length > 1 ? 60 : 120
+                  maxWidth: entries.length > 1 ? 60 : 120,
+                  marginRight: 4
                 }}
               >
                 { batch ? entries[0] && entries[0].name : entries[0] }
               </div>
-              <div style={{ width: 4 }} />
+              <div />
               { entries.length > 1 && i18n.__('And Other %s Items', entries.length) }
               <div style={{ flexGrow: 1 }} />
               {

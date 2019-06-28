@@ -82,7 +82,7 @@ class RunningTask extends React.Component {
     if (h.toString().length === 1) h = `0${h}`
     if (m.toString().length === 1) m = `0${m}`
     if (s.toString().length === 1) s = `0${s}`
-    if (h > 72) return i18n.__('More Than 72 Hours')
+    if (h > 24) return i18n.__('More Than One Day')
     return `${h} : ${m} : ${s}`
   }
 
@@ -154,7 +154,8 @@ class RunningTask extends React.Component {
                 fontSize: 14,
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap'
+                whiteSpace: 'nowrap',
+                marginRight: 4
               }}
             >
               { task.name }

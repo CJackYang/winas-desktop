@@ -230,7 +230,8 @@ class FileDetail extends React.PureComponent {
                 maxWidth: selected.length > 1 ? 120 : 200,
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap'
+                whiteSpace: 'nowrap',
+                marginRight: 4
               }}
             >
               { entry.name }

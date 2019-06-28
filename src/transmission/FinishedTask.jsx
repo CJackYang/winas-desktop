@@ -101,7 +101,8 @@ class FinishedTask extends Component {
               maxWidth: this.props.pin ? 120 : 240,
               overflow: 'hidden',
               textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap'
+              whiteSpace: 'nowrap',
+              marginRight: 4
             }}
           >
             { task.name }
