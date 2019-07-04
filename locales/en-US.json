@@ -86,7 +86,7 @@
   "Confirm Delete Backup Version Text": "This version of the file will be permanently deleted, are you sure to proceed?",
   "Hide Archived": "Hide archived items",
   "Show Archived": "Show archived items",
-  "Current Backup Not Finished": "backing up or interrupted",
+  "Current Backup Not Finished": "Backup interrupted",
   "BackupNotification Dialog Title %s": "%s items failed to back up",
   "Reason": "Reason",
   "Force Backup": "Backup this",
@@ -361,7 +361,7 @@
   "Default Conflict Title {{type}} {{name}} {{action}}": "A {{type}} named '{{name}}' already exists, please select a policy:",
   "Alt Conflict Title {{type}} {{name}} {{remoteType}} {{action}}": "When {{action}} the {{type}} {{name}}, a {{remoteType}} with the same name already exists, please select a policy:",
   "Apply All Text %d": "Apply to all other similar conflicts(%d more).",
-  "Uploading": "uploading",
+  "Uploading": "Uploading",
 
   "==== common/Tasks.jsx ====": "",
   "Failed To Load Task Data": "Failed to load running tasks !",
