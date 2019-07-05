@@ -14,10 +14,10 @@
       <div style="height: 64px; display: flex; align-items: center;">
         <div style="width: 150px; height: 64px; margin-left: 24px">
           <div style="height: 16px; display: flex; align-items: center; margin-top: 16px; font-weight: 500">
-            <span style="font-size: 14px; color: rgba(0,0,0,.76);" id="userName">用户昵称ABC</span>
+            <span style="font-size: 14px; color: rgba(0,0,0,.76);" id="userName"></span>
           </div>
           <div style="height: 16px; display: flex; align-items: center; margin-top: 6px">
-            <span style="font-size: 12px; color: rgba(0,0,0,.54)" id="deviceStatus">设备连接正常</span>
+            <span style="font-size: 12px; color: rgba(0,0,0,.54)" id="deviceStatus"></span>
           </div>
         </div>
         <div style="width: 32px; height: 32px; margin-top: 16px; margin-left: 16px; border-radius: 16px; overflow: hidden">
@@ -29,10 +29,8 @@
       <div style="display: flex; align-items: center; height: 54px; margin-left: 24px;">
         <div style="height: 54px; position: relative; width: 150px">
           <div class="backup" id="noDrive">
-            无备份
           </div>
           <div class="backup" id="backupDisabled">
-            备份已关闭
           </div>
           <div class="backup" id="backupWorking">
             <div>
@@ -43,7 +41,7 @@
           <div class="backup" id="backupFinished">
             <div>
               <div class="backupText" id="lastBackupTime"></div>
-              <div class="backupText">备份完成</div>
+              <div class="backupText" id="backupFinishedText"></div>
             </div>
           </div>
         </div>
@@ -66,7 +64,7 @@
           </clipPath>
           <path clip-path="url(#b)" d="M9.01 14H2v2h7.01v3L13 15l-3.99-4v3zm5.98-1v-3H22V8h-7.01V5L11 9l3.99 4z"/>
         </svg>
-        <span>切换设备</span>
+        <span id="ChangeDeviceText"></span>
       </div>
       <div class="buttonDiv" onclick="openUpdate()" id="update">
         <svg viewBox="0 0 1024 1024" class="svg">
@@ -74,21 +72,21 @@
             d="M341.333333 512L170.666667 512l341.333333-341.333333 341.333333 341.333333-170.666666 0L682.666667 853.333333 341.333333 853.333333z">
           </path>
         </svg>
-        <span>升级</span>
+        <span id="UpdateText"></span>
       </div>
       <div class="buttonDiv" onclick="openAbout()">
         <svg viewBox="0 0 24 24" class="svg">
           <path d="M0 0h24v24H0z" fill="none"/>
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
         </svg>
-        <span>关于</span>
+        <span id="AboutText"></span>
       </div>
       <div class="buttonDiv" onclick="exit()">
         <svg viewBox="0 0 24 24" class="svg">
           <path d="M0 0h24v24H0z" fill="none"/>
           <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
         </svg>
-        <span>退出应用</span>
+        <span id="ExitText"></span>
       </div>
     </div>
     <link rel="stylesheet" href="assets/app.css" type='text/css'>

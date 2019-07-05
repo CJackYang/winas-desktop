@@ -203,8 +203,6 @@
   "Need Bind Volume": "无可用磁盘卷",
   "User Not Exist": "用户不存在",
   "Wait To Bind": "待授权",
-  "Online and LAN Mode": "本地",
-  "Remote Mode": "远程",
   "System Error": "获取系统信息失败",
   "Already Bound": "已授权",
 
@@ -421,8 +419,10 @@
   "About": "关于",
   "Not Logged": "未登录",
   "App Description": "多设备，跨平台，让您随时随地，方便快捷地管理您的数据",
-  "Copyright {{year}}": "©上海钉南智能科技有限公司 2019-{{year}}",
+  "Copyright {{year}}": "©上海钉南智能科技有限公司 2019",
   "User Agreement": "用户使用协议",
+  "Update": "升级",
+  "Exit App": "退出应用",
 
   "==== node/lib/transmissionUpdate.js ====": "",
   "%s Download Finished": "%s 下载成功",
