@@ -432,8 +432,8 @@ class NavViews extends React.Component {
     try {
       const space = this.props.selectedDevice.space
       total = prettySize(space.total * 1024)
-      used = prettySize(space.used * 1024)
-      percent = space.used / space.total
+      used = prettySize((space.total - space.available) * 1024)
+      percent = (space.total - space.available) / space.total
     } catch (e) {
       // console.error('parse error')
     }
