@@ -6,7 +6,7 @@
 
 ```bash
 git clone https://github.com/aidingnan/winas-desktop.git
-cd phi-electron
+cd winas-desktop
 npm install
 npm run rebuild
 npm run webpack2

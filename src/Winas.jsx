@@ -6,9 +6,9 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import Login from './login/Login'
-import PhiAPI from './common/PhiAPI'
 import Account from './control/Account'
 import Navigation from './nav/Navigation'
+import CloudApis from './common/CloudApis'
 import Clipboard from './control/clipboard'
 
 const defaultTheme = getMuiTheme({
@@ -34,7 +34,7 @@ class Winas extends React.Component {
       view: 'login',
       jump: null,
       account: null,
-      phi: new PhiAPI(),
+      cloud: new CloudApis(),
       forceUpdate: false,
       clipboard: new Clipboard(),
       logout: this.logout.bind(this),
@@ -69,8 +69,8 @@ class Winas extends React.Component {
 
   wisnucLogin (user) {
     this.setState({ account: user })
-    /* save phi login data */
-    if (user && user.phi) setTimeout(() => ipcRenderer.send('SETCONFIG', { phi: user.phi }), 450)
+    /* save cloud login data */
+    if (user && user.cloud) setTimeout(() => ipcRenderer.send('SETCONFIG', { cloud: user.cloud }), 450)
   }
 
   deviceLogin ({ dev, user, selectedDevice, isCloud }) {
@@ -107,7 +107,7 @@ class Winas extends React.Component {
       this.selectedDevice.removeAllListeners('updated')
       this.selectedDevice = null
     }
-    this.setState({ account: null, view: 'login', phi: new PhiAPI(), jump: null, selectedDevice: null })
+    this.setState({ account: null, view: 'login', cloud: new CloudApis(), jump: null, selectedDevice: null })
   }
 
   jumpToBindDevice () {
@@ -189,7 +189,7 @@ class Winas extends React.Component {
               this.state.account && this.state.view === 'device' &&
                 <div style={{ position: 'absolute', top: 2, right: 100, height: 34, WebkitAppRegion: 'no-drag' }}>
                   <Account
-                    phi={this.state.phi}
+                    cloud={this.state.cloud}
                     account={this.state.account}
                     logout={() => this.logout()}
                     device={this.state.selectedDevice}

@@ -14,8 +14,8 @@ class ChangeDevice extends React.Component {
   /**
    * @param {object} props
    * @param  {function} props.back - close dialog.
-   * @param  {object} props.phi - cloud api.
-   * @param  {function} props.phi.req - cloud requests.
+   * @param  {object} props.cloud - cloud api.
+   * @param  {function} props.cloud.req - cloud requests.
    * @param  {object} props.selectedDevice - current logged device.
    *
    */
@@ -37,7 +37,7 @@ class ChangeDevice extends React.Component {
         loggingDevice: null
       })
 
-      this.props.phi.req('stationList', null, (err, res) => {
+      this.props.cloud.req('stationList', null, (err, res) => {
         console.log(err, res)
         if (err) {
           this.setState({ list: [], loading: false, error: err })
@@ -52,12 +52,12 @@ class ChangeDevice extends React.Component {
   async remoteLoginAsync (device, forceCloud) {
     const { account } = this.props
     const args = { deviceSN: device.sn }
-    const { token, cookie } = this.props.phi
+    const { token, cookie } = this.props.cloud
     const [tokenRes, users, space, isLAN] = await Promise.all([
-      this.props.phi.reqAsync('LANToken', args),
-      this.props.phi.reqAsync('localUsers', args),
-      this.props.phi.reqAsync('space', args),
-      this.props.phi.testLANAsync(device.LANIP),
+      this.props.cloud.reqAsync('LANToken', args),
+      this.props.cloud.reqAsync('localUsers', args),
+      this.props.cloud.reqAsync('space', args),
+      this.props.cloud.testLANAsync(device.LANIP),
       Promise.delay(2000)
     ])
 
@@ -76,7 +76,7 @@ class ChangeDevice extends React.Component {
    * @param {bool} forceCloud force connecting via cloud
    */
   selectDevice (cdev, forceCloud) {
-    console.log(cdev, this.props.phi)
+    console.log(cdev, this.props.cloud)
     this.setState({ loggingDevice: cdev, list: [cdev], failed: false })
     this.remoteLoginAsync(cdev, forceCloud)
       .then(({ dev, user, token, space, isCloud }) => {
@@ -95,7 +95,7 @@ class ChangeDevice extends React.Component {
           selectedDevice: dev,
           isCloud
         })
-        this.props.phi.req('setLastSN', { sn: dev.sn })
+        this.props.cloud.req('setLastSN', { sn: dev.sn })
       })
       .catch((error) => {
         console.error('this.getLANToken', error)

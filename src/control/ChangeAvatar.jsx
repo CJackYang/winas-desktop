@@ -169,12 +169,12 @@ class ChangeAvatar extends React.Component {
     content.drawImage(img, dx, dy, dWidth, dHeight)
 
     const file = Buffer.from(canvas.toDataURL().split(',')[1], 'base64')
-    this.props.phi.req('setAvatar', file, (err, res) => {
+    this.props.cloud.req('setAvatar', file, (err, res) => {
       if (err || !res) this.setState({ status: 'failed' })
       else {
         this.setState({ status: 'success' })
-        if (this.props.account && this.props.account.phi) {
-          Object.assign(this.props.account.phi, { avatarUrl: res })
+        if (this.props.account && this.props.account.cloud) {
+          Object.assign(this.props.account.cloud, { avatarUrl: res })
           this.props.wisnucLogin(this.props.account)
           this.setState({ avatarUrl: res })
         }
@@ -184,7 +184,7 @@ class ChangeAvatar extends React.Component {
 
   renderUpload () {
     console.log(this.props)
-    const avatarUrl = this.props.account.phi && this.props.account.phi && this.props.account.phi.avatarUrl
+    const avatarUrl = this.props.account && this.props.account.cloud && this.props.account.cloud.avatarUrl
     return (
       <div
         style={{ height: 320 }}

@@ -121,6 +121,7 @@
   "Retry to Connect": "重新连接",
   "Operation Failed": "操作失败",
   "Name": "名称",
+  "Remote Mode": "远程",
 
   "==== nav/Notifications.jsx ====": "",
   "Notifications": "通知",

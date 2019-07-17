@@ -71,19 +71,19 @@ class WeChatLogin extends React.Component {
 
       const clientId = window.config.machineId
 
-      this.props.phi.req('wechatToken', { code, clientId }, (err, data) => {
+      this.props.cloud.req('wechatToken', { code, clientId }, (err, data) => {
         if (err || !data) {
           this.setState({ error: i18n.__('WeChat Login Error Text') })
         } else if (!data.user) {
           this.setState({ error: i18n.__('WeChat Login No User Error Text') })
         } else {
           const { username, id, avatarUrl, nickName } = data
-          const phi = window.config && window.config.global && window.config.global.phi
-          const accounts = (phi && phi.accounts) || []
+          const cloud = window.config && window.config.global && window.config.global.cloud
+          const accounts = (cloud && cloud.accounts) || []
           if (accounts.every(user => user.pn !== username)) {
             accounts.push({ pn: username, avatarUrl, nickName })
           }
-          this.props.phi.req('stationList', null, (e, r, cookie) => {
+          this.props.cloud.req('stationList', null, (e, r, cookie) => {
             if (e || !r) {
               this.setState({ error: i18n.__('WeChat Get Station List Error Text') })
             } else {
@@ -97,7 +97,7 @@ class WeChatLogin extends React.Component {
               }
               const list = [...r.ownStations, ...r.sharedStations]
               const lastSN = r.lastUseDeviceSn
-              this.props.onSuccess({ lastSN, list, phonenumber: username, winasUserId: id, phi: user })
+              this.props.onSuccess({ lastSN, list, phonenumber: username, winasUserId: id, cloud: user })
             }
           })
         }

@@ -18,9 +18,9 @@ class Login extends React.Component {
       account: null
     }
 
-    this.wisnucLoginSuccess = ({ lastSN, list, phonenumber, winasUserId, phi }) => {
+    this.wisnucLoginSuccess = ({ lastSN, list, phonenumber, winasUserId, cloud }) => {
       const dev = list.find(l => l.sn === lastSN) || (list && list[0])
-      const account = { phonenumber, winasUserId, phi, name: phonenumber }
+      const account = { phonenumber, winasUserId, cloud, name: phonenumber }
       this.setState({ dev, list, account, status: 'connectDev' })
       this.props.wisnucLogin(account)
     }
@@ -33,7 +33,7 @@ class Login extends React.Component {
     if (this.props.jump) this.setState(this.props.jump)
   }
 
-  /* make sure log out phi account success */
+  /* make sure log out cloud account success */
   componentWillReceiveProps (nextProps) {
     if (!nextProps.account && this.state.status !== 'wisnucLogin') this.setState({ status: 'wisnucLogin', selectedDevice: null })
   }

@@ -53,8 +53,8 @@
 
   "==== view/Backup.jsx ====": "",
   "Current Device": "Local",
-  "Backup Success": "All files backed up",
-  "Backup Not Finished": "The last backup could not be completed",
+  "Backup Success": "All files backed up.",
+  "Backup Not Finished": "Backup not completed.",
   "No Backup": "No Backup",
   "Add Backup Directory": "Add directory",
   "Get Backup Dirs Failed": "Failed to get infomation of backup directory.",
@@ -121,6 +121,7 @@
   "Retry to Connect": "Reconnect",
   "Operation Failed": "Operation failed",
   "Name": "Name",
+  "Remote Mode": "Remote Mode",
 
   "==== nav/Notifications.jsx ====": "",
   "Notifications": "Notifications",

@@ -5,7 +5,7 @@ import parseRes from './parseRes'
 import RequestManager from './reqman'
 import { cloudAddress } from '../../config/config'
 
-class PhiAPI extends RequestManager {
+class CloudApis extends RequestManager {
   constructor () {
     super()
     this.state = {
@@ -16,7 +16,7 @@ class PhiAPI extends RequestManager {
     this.setRequest = (name, err, res, next) => {
       const { error, body } = parseRes(err, res)
 
-      /* save phi token */
+      /* save cloud token */
       if ((name === 'token' || name === 'wechatToken') && !error && body) this.token = body.token
       const isGetList = (name === 'stationList') && !error && body
       if (isGetList) {
@@ -238,4 +238,4 @@ class PhiAPI extends RequestManager {
   }
 }
 
-export default PhiAPI
+export default CloudApis

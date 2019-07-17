@@ -35,7 +35,7 @@ class Account extends React.Component {
   }
 
   renderAccountPop () {
-    const { avatarUrl, nickName, pn } = this.props.account.phi
+    const { avatarUrl, nickName, pn } = this.props.account.cloud
     return (
       <div style={{ height: 188, width: 312, WebkitAppRegion: 'no-drag' }}>
         <div style={{ height: 144, display: 'flex', alignItems: 'center' }}>
@@ -85,8 +85,8 @@ class Account extends React.Component {
   }
 
   render () {
-    if (!this.props.account || !this.props.account.phi) return <div />
-    const { avatarUrl } = this.props.account.phi
+    if (!this.props.account || !this.props.account.cloud) return <div />
+    const { avatarUrl } = this.props.account.cloud
     return (
       <div style={{ height: 32, display: 'flex', alignItems: 'center', WebkitAppRegion: 'no-drag' }} >
         <div onClick={this.openPop} style={{ WebkitAppRegion: 'no-drag', cursor: 'pointer' }} >

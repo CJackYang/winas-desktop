@@ -57,7 +57,7 @@ class WisnucLogin extends React.Component {
 
     this.checkPhone = () => {
       this.setState({ loading: true })
-      this.props.phi.req('checkUser', { phone: this.state.pn }, (err, res) => {
+      this.props.cloud.req('checkUser', { phone: this.state.pn }, (err, res) => {
         if (err || !res || !res.userExist) this.setState({ pnError: i18n.__('User Not Exist'), loading: false })
         else {
           // replace previous accounts
@@ -67,8 +67,8 @@ class WisnucLogin extends React.Component {
           accounts.unshift(Object.assign({ pn: this.state.pn }, res))
 
           this.setState({ status: 'password', loading: false, accounts, avatarUrl: res.avatarUrl })
-          const newUserInfo = Object.assign({}, this.phi || {}, { accounts })
-          this.props.ipcRenderer.send('SETCONFIG', { phi: newUserInfo })
+          const newUserInfo = Object.assign({}, this.cloud || {}, { accounts })
+          this.props.ipcRenderer.send('SETCONFIG', { cloud: newUserInfo })
         }
       })
     }
@@ -76,14 +76,14 @@ class WisnucLogin extends React.Component {
     this.delUser = (user) => {
       const accounts = this.state.accounts.filter(u => u.pn !== user.pn)
       this.setState({ accounts, confirmDelUser: false })
-      const newUserInfo = Object.assign({}, this.phi || {}, { accounts })
-      this.props.ipcRenderer.send('SETCONFIG', { phi: newUserInfo })
+      const newUserInfo = Object.assign({}, this.cloud || {}, { accounts })
+      this.props.ipcRenderer.send('SETCONFIG', { cloud: newUserInfo })
     }
 
     this.login = () => {
       this.setState({ loading: true })
       const clientId = window.config.machineId
-      this.props.phi.req(
+      this.props.cloud.req(
         'token',
         { phonenumber: this.state.pn, password: this.state.pwd, clientId },
         (err, res) => {
@@ -101,11 +101,11 @@ class WisnucLogin extends React.Component {
             if (index > -1) accounts.splice(index, 1)
             accounts.unshift(Object.assign({ pn: this.state.pn }, res))
 
-            this.props.phi.req('stationList', null, (e, r, cookie) => {
+            this.props.cloud.req('stationList', null, (e, r, cookie) => {
               if (e || !r) {
                 this.setState({ failed: true, loading: false })
               } else {
-                const phi = Object.assign({}, res, {
+                const cloud = Object.assign({}, res, {
                   cookie,
                   accounts,
                   pn: this.state.pn,
@@ -116,7 +116,7 @@ class WisnucLogin extends React.Component {
                 this.setState({ loading: false, pwd: '' })
                 const list = [...r.ownStations, ...r.sharedStations]
                 const lastSN = r.lastUseDeviceSn
-                this.props.onSuccess({ lastSN, list, phonenumber: this.state.pn, winasUserId: res.id, phi })
+                this.props.onSuccess({ lastSN, list, phonenumber: this.state.pn, winasUserId: res.id, cloud })
               }
             })
           }
@@ -126,14 +126,14 @@ class WisnucLogin extends React.Component {
 
     this.fakeLogin = () => {
       this.setState({ loading: true })
-      /* assign token to PhiAPI */
-      Object.assign(this.props.phi, { token: this.phi.token })
-      this.props.phi.req('stationList', null, (e, r, cookie) => {
+      /* assign token to CloudApis */
+      Object.assign(this.props.cloud, { token: this.cloud.token })
+      this.props.cloud.req('stationList', null, (e, r, cookie) => {
         if (e || !r) {
           if (r && r.code === 401) this.setState({ pwdError: i18n.__('Token Expired'), loading: false })
           else this.setState({ failed: true, loading: false, pwdError: i18n.__('Login Error') })
         } else {
-          Object.assign(this.props.phi, { cookie })
+          Object.assign(this.props.cloud, { cookie })
           this.setState({ loading: false })
           const list = [...r.ownStations, ...r.sharedStations]
           const lastSN = r.lastUseDeviceSn
@@ -141,8 +141,8 @@ class WisnucLogin extends React.Component {
             lastSN,
             list,
             phonenumber: this.state.pn,
-            winasUserId: this.phi.winasUserId,
-            phi: this.phi
+            winasUserId: this.cloud.winasUserId,
+            cloud: this.cloud
           })
         }
       })
@@ -161,11 +161,11 @@ class WisnucLogin extends React.Component {
   }
 
   componentDidMount () {
-    this.phi = window.config && window.config.global && window.config.global.phi
+    this.cloud = window.config && window.config.global && window.config.global.cloud
     const autoLaunch = window.config && window.config.global && !!window.config.global.autoLaunch
     this.setState({ autoLaunch })
-    if (this.phi) {
-      const { autoLogin, pn, token, accounts, avatarUrl } = this.phi
+    if (this.cloud) {
+      const { autoLogin, pn, token, accounts, avatarUrl } = this.cloud
       /* no accounts, last login account, another account */
       if (!accounts || !accounts.length || !pn) this.setState({ status: 'phone', pn: '', accounts: [], autoLogin: false })
       else if (accounts.find(u => u.pn !== pn)) {
