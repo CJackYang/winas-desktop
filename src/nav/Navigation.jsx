@@ -214,6 +214,31 @@ class NavViews extends React.Component {
     ipcRenderer.on('JUMP_TO', (e, nav) => this.jumpTo(nav))
     document.addEventListener('keydown', this.escListener)
     ipcRenderer.on('CHANGE_DEVICE', this.onChangeDevice)
+
+    // refresh cloud token every hour
+    this.refreshTokenTimer = setInterval(() => {
+      if (!window.config || !window.config.global) return
+      console.log(this.props)
+      const refreshToken = window.config.global.cloud && window.config.global.cloud.refreshToken
+      const clientId = window.config.machineId
+      this.props.cloud.req(
+        'refreshToken',
+        { refreshToken, clientId },
+        (err, res, cookie) => {
+          if (err) {
+            console.error(err)
+          } else {
+            const { account, isCloud } = this.props
+            account.cloud.refreshToken = res.refreshToken
+            account.cloud.token = res.token
+            this.props.wisnucLogin(account)
+            if (isCloud) {
+              ipcRenderer.send('RefreshToken', { newToken: res.token, newCookie: cookie })
+            }
+          }
+        }
+      )
+    }, 1000 * 60 * 60)
   }
 
   componentDidUpdate () {
@@ -241,6 +266,7 @@ class NavViews extends React.Component {
     ipcRenderer.removeAllListeners('JUMP_TO')
     ipcRenderer.removeAllListeners('CHANGE_DEVICE')
     document.removeEventListener('keydown', this.escListener)
+    clearInterval(this.refreshTokenTimer)
   }
 
   install (navs) {

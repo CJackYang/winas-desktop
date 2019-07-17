@@ -12,12 +12,18 @@ class CloudApis extends RequestManager {
       req: this.req.bind(this),
       reqAsync: this.reqAsync.bind(this)
     }
-
+    this.cookie = ''
     this.setRequest = (name, err, res, next) => {
       const { error, body } = parseRes(err, res)
 
       /* save cloud token */
-      if ((name === 'token' || name === 'wechatToken') && !error && body) this.token = body.token
+      const isToken = ['token', 'wechatToken', 'refreshToken'].includes(name) && !error && body
+      if (isToken) {
+        this.token = body.token
+        this.refreshToken = body.refreshToken
+        this.cookie = res && res.header && res.header['set-cookie'] && res.header['set-cookie'][0]
+      }
+
       const isGetList = (name === 'stationList') && !error && body
       if (isGetList) {
         this.cookie = res && res.header && res.header['set-cookie'] && res.header['set-cookie'][0]
@@ -26,7 +32,7 @@ class CloudApis extends RequestManager {
       if (typeof next !== 'function') return
 
       /* callback next */
-      if (isGetList) {
+      if (isGetList || isToken) {
         next(error, body, this.cookie)
       } else next(error, body)
     }
@@ -37,6 +43,7 @@ class CloudApis extends RequestManager {
       .get(`${cloudAddress}/${ep}`)
       .set('Content-Type', 'application/json')
       .set('Authorization', this.token)
+      .set('cookie', this.cookie)
   }
 
   apost (ep, data) {
@@ -44,6 +51,7 @@ class CloudApis extends RequestManager {
       .post(`${cloudAddress}/${ep}`)
       .set('Content-Type', 'application/json')
       .set('Authorization', this.token)
+      .set('cookie', this.cookie)
 
     return typeof data === 'object' ? r.send(data) : r
   }
@@ -53,6 +61,7 @@ class CloudApis extends RequestManager {
       .patch(`${cloudAddress}/${ep}`)
       .set('Content-Type', 'application/json')
       .set('Authorization', this.token)
+      .set('cookie', this.cookie)
 
     return typeof data === 'object' ? r.send(data) : r
   }
@@ -62,6 +71,7 @@ class CloudApis extends RequestManager {
       .del(`${cloudAddress}/${ep}`)
       .set('Content-Type', 'application/json')
       .set('Authorization', this.token)
+      .set('cookie', this.cookie)
 
     return typeof data === 'object' ? r.send(data) : r
   }
@@ -103,6 +113,24 @@ class CloudApis extends RequestManager {
             username: args.phonenumber,
             password: args.password
           })
+        break
+
+      case 'refreshToken':
+        console.log('refreshToken args', args)
+        r = request
+          .post(
+            `${cloudAddress}/user/refreshToken`,
+            {
+              type: 'pc',
+              refreshToken: args.refreshToken,
+              clientId: args.clientId || 'qwert'
+            }
+          )
+          .timeout({
+            response: 30000, // Wait 30 seconds for the server to start sending,
+            deadline: 30000 // but allow 1 minute for the file to finish loading.
+          })
+
         break
 
       case 'wechatToken':

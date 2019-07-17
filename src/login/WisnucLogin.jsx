@@ -128,24 +128,36 @@ class WisnucLogin extends React.Component {
       this.setState({ loading: true })
       /* assign token to CloudApis */
       Object.assign(this.props.cloud, { token: this.cloud.token })
-      this.props.cloud.req('stationList', null, (e, r, cookie) => {
-        if (e || !r) {
-          if (r && r.code === 401) this.setState({ pwdError: i18n.__('Token Expired'), loading: false })
-          else this.setState({ failed: true, loading: false, pwdError: i18n.__('Login Error') })
-        } else {
-          Object.assign(this.props.cloud, { cookie })
-          this.setState({ loading: false })
-          const list = [...r.ownStations, ...r.sharedStations]
-          const lastSN = r.lastUseDeviceSn
-          this.props.onSuccess({
-            lastSN,
-            list,
-            phonenumber: this.state.pn,
-            winasUserId: this.cloud.winasUserId,
-            cloud: this.cloud
-          })
+      this.props.cloud.req(
+        'refreshToken',
+        { refreshToken: this.cloud.refreshToken, clientId: window.config.machineId },
+        (err, res) => {
+          if (err || !res) {
+            if (res && (res.code === 401 || res.code === 60012)) {
+              this.setState({ pwdError: i18n.__('Token Expired'), loading: false })
+            } else this.setState({ failed: true, loading: false, pwdError: i18n.__('Login Error') })
+          } else {
+            this.props.cloud.req('stationList', null, (e, r, cookie) => {
+              if (e || !r) {
+                if (r && r.code === 401) this.setState({ pwdError: i18n.__('Token Expired'), loading: false })
+                else this.setState({ failed: true, loading: false, pwdError: i18n.__('Login Error') })
+              } else {
+                Object.assign(this.props.cloud, { cookie })
+                this.setState({ loading: false })
+                const list = [...r.ownStations, ...r.sharedStations]
+                const lastSN = r.lastUseDeviceSn
+                this.props.onSuccess({
+                  lastSN,
+                  list,
+                  phonenumber: this.state.pn,
+                  winasUserId: this.cloud.winasUserId,
+                  cloud: Object.assign(this.cloud, { token: res.token, refreshToken: res.refreshToken })
+                })
+              }
+            })
+          }
         }
-      })
+      )
     }
 
     // method to handle locales
