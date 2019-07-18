@@ -74,7 +74,6 @@ class BackupCard extends React.PureComponent {
     }
 
     this.updateDrive = (error, drive) => {
-      console.log('this.updateDrive', error, drive)
       const { openSnackBar } = this.props
       if (error) openSnackBar(i18n.__('Operation Failed'))
       else {
@@ -136,15 +135,16 @@ class BackupCard extends React.PureComponent {
         this.setState({ drive })
       }
     }
-
-    ipcRenderer.on('updateBackupRoot', () => {
-      if (!this.props.index) this.refresh({ noloading: true })
-    })
   }
 
   componentDidMount () {
     if (!this.props.index) {
       ipcRenderer.on('BACKUP_MSG', this.onMsg)
+
+      ipcRenderer.on('updateBackupRoot', () => {
+        this.refresh({ noloading: true })
+      })
+
       if (this.hasDrive) this.refresh()
     }
   }
