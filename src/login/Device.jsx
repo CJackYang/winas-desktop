@@ -128,9 +128,9 @@ class Device extends React.Component {
     let [total, used, percent] = ['', '', '', 0]
     try {
       const space = this.device.state.space.data
-      total = prettySize(space.total * 1024)
-      used = prettySize((space.total - space.available) * 1024)
-      percent = (space.total - space.available) / space.total
+      total = prettySize((space.available + space.used) * 1024)
+      used = prettySize(space.used * 1024)
+      percent = space.used / (space.available + space.used)
     } catch (e) {
       // console.error('parse error')
     }
