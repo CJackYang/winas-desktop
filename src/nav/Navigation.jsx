@@ -606,7 +606,7 @@ class NavViews extends React.Component {
                   marginLeft: 88
                 }}
               >
-                <Menu style={{ maxWidth: 260 }}>
+                <Menu style={{ maxWidth: 300 }}>
                   <RenderDevice {...this.props} onChangeDevice={this.onChangeDevice} />
                 </Menu>
               </Popover>

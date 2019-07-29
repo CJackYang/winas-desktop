@@ -56,28 +56,32 @@ class Disk extends React.PureComponent {
     if (!audio || !document || !image || !video) return (<div />)
     const { available, used } = space
     const usedPercent = used / (available + used)
-    const countTotal = (video.totalSize + image.totalSize + audio.totalSize + document.totalSize + other.totalSize) / usedPercent
+    const dataSize = video.totalSize + image.totalSize + audio.totalSize + document.totalSize + other.totalSize
+    const systemSize = Math.max(0, used * 1024 - dataSize)
+    const countTotal = (dataSize + systemSize) / usedPercent
 
     const videoSize = video.totalSize / countTotal
     const imageSize = image.totalSize / countTotal
     const audioSize = audio.totalSize / countTotal
     const documentSize = document.totalSize / countTotal
     const otherSize = other.totalSize / countTotal
+    const sysSize = systemSize / countTotal
 
     const data = [
       { color: '#2196f3', progress: videoSize, title: i18n.__('Video'), size: video.totalSize },
       { color: '#aa00ff', progress: imageSize, title: i18n.__('Picture'), size: image.totalSize },
       { color: '#f2497d', progress: audioSize, title: i18n.__('Music'), size: audio.totalSize },
       { color: '#ffb300', progress: documentSize, title: i18n.__('Document'), size: document.totalSize },
-      { color: '#00c853', progress: otherSize, title: i18n.__('Others'), size: other.totalSize }
+      { color: '#00c853', progress: otherSize, title: i18n.__('Others'), size: other.totalSize },
+      { color: '#000000', progress: sysSize, title: i18n.__('System'), size: systemSize }
     ]
-
+    console.log('renderStorage', stats, dataSize, systemSize, data, space)
     return (
       <div>
         <div
           style={{
             height: 16,
-            width: 212,
+            width: 256,
             backgroundColor: '#eceff1',
             borderRadius: 4,
             overflow: 'hidden',
@@ -99,20 +103,20 @@ class Disk extends React.PureComponent {
             ))
           }
         </div>
-        <div style={{ width: 212, margin: '0 auto', display: 'flex', alignItems: 'center' }}>
+        <div style={{ width: 256, margin: '0 auto', display: 'flex', alignItems: 'center' }}>
           {
             data.map(({ color, title }) => (
               <div style={{ display: 'flex', alignItems: 'center', marginTop: 4, width: 100 }} key={title}>
                 <div style={{ width: 8, height: 8, backgroundColor: color, marginTop: 2 }} />
-                <div style={{ fontSize: 12, color: '#505259', marginLeft: 4 }}>
+                <div style={{ fontSize: 10, color: '#505259', marginLeft: 3, marginTop: 2 }}>
                   {title}
                 </div>
               </div>
             ))
           }
         </div>
-        <div style={{ width: '100%', height: 1, marginTop: 24, backgroundColor: '#e8eaed' }} />
-        <div style={{ width: 212, height: 200, padding: '8px 24px' }} >
+        <div style={{ width: '100%', height: 1, marginTop: 16, backgroundColor: '#e8eaed' }} />
+        <div style={{ width: 256, height: 240, padding: '8px 24px' }} >
           {
             data.map(({ title, size }) => (
               <div style={{ height: 40, display: 'flex', alignItems: 'center', width: '100%' }} key={title}>
@@ -131,15 +135,15 @@ class Disk extends React.PureComponent {
     const name = this.props.selectedDevice.name || i18n.__('Default Product Name')
     const { isCloud } = this.props
     return (
-      <div style={{ width: 260, height: 339, marginTop: -8, overflow: 'hidden' }}>
-        <div style={{ height: 56, position: 'relative', paddingLeft: 24, paddingTop: 16 }}>
-          <div style={{ height: 24, fontSize: 18, fontWeight: 500, color: 'rgba(0,0,0,.76)' }}>
+      <div style={{ width: 300, height: 384, marginTop: -8, overflow: 'hidden' }}>
+        <div style={{ height: 64, position: 'relative', paddingLeft: 24, paddingTop: 16 }}>
+          <div style={{ height: 32, fontSize: 18, fontWeight: 500, color: 'rgba(0,0,0,.76)' }}>
             {name}
           </div>
           <div style={{ height: 22, fontSize: 12, color: 'rgba(14,5,10,.29)' }}>
             { isCloud ? i18n.__('Connected Via Cloud') : i18n.__('Connected Via LAN') }
           </div>
-          <div style={{ position: 'absolute', top: 8, right: 8, height: 24 }}>
+          <div style={{ position: 'absolute', top: 12, right: 8, height: 24 }}>
             <FlatButton
               primary
               label={i18n.__('Change Device')}
