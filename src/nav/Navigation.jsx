@@ -199,9 +199,27 @@ class NavViews extends React.Component {
     this.onChangeDevice = () => {
       this.setState({ openDevice: false, changeDevice: true })
     }
+
     this.escListener = (e) => {
       if (this.state.searchMode && e.key === 'Escape') {
         this.exitSearchMode()
+      }
+    }
+    // DoubleClick one time, cheatClick four times to OPEN_DEVTOOLS
+    this.cheatCount = 0
+    this.cheatStart = false
+
+    this.cheatDoubleClick = (e) => {
+      this.cheatStart = true
+      this.cheatCount = 0
+    }
+
+    this.cheatClick = (e) => {
+      this.cheatCount += 1
+      if (this.cheatCount === 4 && this.cheatStart) {
+        this.cheatCount = 0
+        this.cheatStart = false
+        ipcRenderer.send('OPEN_DEVTOOLS')
       }
     }
   }
@@ -509,7 +527,14 @@ class NavViews extends React.Component {
                     style={{ width: 40, height: 40, cursor: 'pointer', marginTop: -8, color: '#00695c' }}
                     onClick={this.exitSearchMode}
                   />
-                ) : <WisnucLogo style={{ width: 48, height: 48, color: '#00695c' }} />
+                )
+                : (
+                  <WisnucLogo
+                    style={{ width: 48, height: 48, color: '#00695c' }}
+                    onClick={this.cheatClick}
+                    onDoubleClick={this.cheatDoubleClick}
+                  />
+                )
             }
           </div>
           {
