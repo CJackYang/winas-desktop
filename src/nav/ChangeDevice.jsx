@@ -159,6 +159,7 @@ class ChangeDevice extends React.Component {
   componentDidMount () {
     this.reqList()
   }
+
   renderFailed (error) {
     const isUnauthorized = error && error.status === 401
     return (
@@ -174,6 +175,7 @@ class ChangeDevice extends React.Component {
       </div>
     )
   }
+
   render () {
     return (
       <div style={{ width: 450, height: 390, zIndex: 100, position: 'relative', backgroundColor: 'white' }} >

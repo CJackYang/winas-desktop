@@ -3,7 +3,6 @@ import i18n from 'i18n'
 
 import FlatButton from '../common/FlatButton'
 import prettySize from '../common/prettySize'
-import ConfirmDialog from '../common/ConfirmDialog'
 import CircularLoading from '../common/CircularLoading'
 
 class Disk extends React.PureComponent {
@@ -33,15 +32,42 @@ class Disk extends React.PureComponent {
   renderFailed (error) {
     const isUnauthorized = error && error.status === 401
     return (
-      <div style={{ width: '100%', height: 200 }} className="flexCenter" >
-        {i18n.__('Error in Base Text')}
-        {/* show dialog when token expired */}
-        <ConfirmDialog
-          open={isUnauthorized}
-          onConfirm={() => this.props.logout()}
-          title={i18n.__('Token Expired')}
-          text={i18n.__('Token Expired Text')}
-        />
+      <div
+        style={{
+          height: 304,
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center'
+        }}
+        className="flexCenter"
+      >
+        {
+          !isUnauthorized
+            ? i18n.__('Error in Base Text')
+            : (
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                flexDirection: 'column',
+                height: 304,
+                width: '100%'
+              }}>
+                <div style={{ flexGrow: 1 }} />
+                <div style={{ height: 60, display: 'flex', alignItems: 'center' }}>
+                  { `${i18n.__('Token Expired')},  ${i18n.__('Token Expired Text')}` }
+                </div>
+                <div style={{ flexGrow: 2 }} />
+
+                <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                  <FlatButton
+                    primary
+                    onClick={() => this.props.logout()}
+                    label={i18n.__('Confirm')}
+                  />
+                </div>
+              </div>
+            )
+        }
       </div>
     )
   }
