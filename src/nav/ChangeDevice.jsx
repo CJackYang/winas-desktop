@@ -6,7 +6,7 @@ import { MenuItem, FlatButton } from 'material-ui'
 import Device from '../login/Device'
 import ScrollBar from '../common/ScrollBar'
 import { LIButton } from '../common/Buttons'
-import ConfirmDialog from '../common/ConfirmDialog'
+import TokenExpiredDilaog from '../common/TokenExpiredDilaog'
 import { CloseIcon, RefreshIcon } from '../common/Svg'
 import CircularLoading from '../common/CircularLoading'
 
@@ -166,11 +166,13 @@ class ChangeDevice extends React.Component {
       <div style={{ width: '100%', height: 200 }} className="flexCenter" >
         {i18n.__('Error in Base Text')}
         {/* show dialog when token expired */}
-        <ConfirmDialog
+        <TokenExpiredDilaog
           open={isUnauthorized}
           onConfirm={() => this.props.logout()}
-          title={i18n.__('Token Expired')}
-          text={i18n.__('Token Expired Text')}
+          onClose={() => this.reqList()}
+          cloud={this.props.cloud}
+          account={this.props.account}
+          wisnucLogin={this.props.wisnucLogin}
         />
       </div>
     )
