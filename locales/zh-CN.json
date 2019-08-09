@@ -395,6 +395,9 @@
   "Year {{year}} {{mon}} {{day}}": "{{year}}年{{mon}}月{{day}}日",
   "Yesterday {{hour}} {{min}}": "昨天 {{hour}}:{{min}}",
 
+  "==== common/TokenExpiredDialog.jsx ====": "",
+  "Refreshing Token Text": "重新登录中...",
+
   "==== control/AccountApp.jsx ====": "",
   "Not Email": "请输入正确的邮箱地址",
   "Email": "邮箱",

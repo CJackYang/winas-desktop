@@ -395,6 +395,9 @@
   "Year {{year}} {{mon}} {{day}}": "{{day}}/{{mon}}/{{year}}",
   "Yesterday {{hour}} {{min}}": "Yesterday {{hour}}:{{min}}",
 
+  "==== common/TokenExpiredDialog.jsx ====": "",
+  "Refreshing Token Text": "Reconnecting...",
+
   "==== control/AccountApp.jsx ====": "",
   "Not Email": "Invalid email address",
   "Email": "Email",
