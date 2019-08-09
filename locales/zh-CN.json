@@ -199,6 +199,7 @@
   "Device Offline": "设备离线",
   "Login Error": "登录失败",
   "No Bind Device Title": "没有授权设备",
+  "No Bind Device Text": "请先使用手机端的应用'口袋网盘'绑定设备",
 
   "==== login/DeviceSelect.jsx====": "",
   "Client Version %s": "版本号 V%s",

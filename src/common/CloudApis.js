@@ -3,7 +3,6 @@ import request from 'superagent'
 
 import parseRes from './parseRes'
 import RequestManager from './reqman'
-import { cloudAddress } from '../../config/config'
 
 class CloudApis extends RequestManager {
   constructor () {
@@ -21,12 +20,12 @@ class CloudApis extends RequestManager {
       if (isToken) {
         this.token = body.token
         this.refreshToken = body.refreshToken
-        this.cookie = res && res.header && res.header['set-cookie'] && res.header['set-cookie'][0]
+        this.cookie = (res && res.header && res.header['set-cookie'] && res.header['set-cookie'][0]) || ''
       }
 
       const isGetList = (name === 'stationList') && !error && body
       if (isGetList) {
-        this.cookie = res && res.header && res.header['set-cookie'] && res.header['set-cookie'][0]
+        this.cookie = (res && res.header && res.header['set-cookie'] && res.header['set-cookie'][0]) || ''
       }
 
       if (typeof next !== 'function') return
@@ -38,9 +37,13 @@ class CloudApis extends RequestManager {
     }
   }
 
+  get cloudAddress () {
+    return global.config.cloudAddress || 'https://aws-cn.aidingnan.com/c/v1'
+  }
+
   aget (ep) {
     return request
-      .get(`${cloudAddress}/${ep}`)
+      .get(`${this.cloudAddress}/${ep}`)
       .set('Content-Type', 'application/json')
       .set('Authorization', this.token)
       .set('cookie', this.cookie)
@@ -48,7 +51,7 @@ class CloudApis extends RequestManager {
 
   apost (ep, data) {
     const r = request
-      .post(`${cloudAddress}/${ep}`)
+      .post(`${this.cloudAddress}/${ep}`)
       .set('Content-Type', 'application/json')
       .set('Authorization', this.token)
       .set('cookie', this.cookie)
@@ -58,7 +61,7 @@ class CloudApis extends RequestManager {
 
   apatch (ep, data) {
     const r = request
-      .patch(`${cloudAddress}/${ep}`)
+      .patch(`${this.cloudAddress}/${ep}`)
       .set('Content-Type', 'application/json')
       .set('Authorization', this.token)
       .set('cookie', this.cookie)
@@ -68,7 +71,7 @@ class CloudApis extends RequestManager {
 
   adel (ep, data) {
     const r = request
-      .del(`${cloudAddress}/${ep}`)
+      .del(`${this.cloudAddress}/${ep}`)
       .set('Content-Type', 'application/json')
       .set('Authorization', this.token)
       .set('cookie', this.cookie)
@@ -78,7 +81,7 @@ class CloudApis extends RequestManager {
 
   command (deviceSN, data) {
     return request
-      .post(`${cloudAddress}/station/${deviceSN}/json`)
+      .post(`${this.cloudAddress}/station/${deviceSN}/json`)
       .set('Content-Type', 'application/json')
       .set('Authorization', this.token)
       .set('cookie', this.cookie)
@@ -90,19 +93,19 @@ class CloudApis extends RequestManager {
     switch (name) {
       case 'authorizationcode':
         r = request
-          .get(`${cloudAddress}/user/smsCode`)
+          .get(`${this.cloudAddress}/user/smsCode`)
           .query({ phone: args.phone })
         break
 
       case 'checkUser':
         r = request
-          .get(`${cloudAddress}/user/phone/check`)
+          .get(`${this.cloudAddress}/user/phone/check`)
           .query({ phone: args.phone })
         break
 
       case 'token':
         r = request
-          .get(`${cloudAddress}/user/password/token`)
+          .get(`${this.cloudAddress}/user/password/token`)
           .timeout({
             response: 30000, // Wait 30 seconds for the server to start sending,
             deadline: 30000 // but allow 1 minute for the file to finish loading.
@@ -119,7 +122,7 @@ class CloudApis extends RequestManager {
         console.log('refreshToken args', args)
         r = request
           .post(
-            `${cloudAddress}/user/refreshToken`,
+            `${this.cloudAddress}/user/refreshToken`,
             {
               type: 'pc',
               refreshToken: args.refreshToken,
@@ -135,7 +138,7 @@ class CloudApis extends RequestManager {
 
       case 'wechatToken':
         r = request
-          .get(`${cloudAddress}/wechat/token`)
+          .get(`${this.cloudAddress}/wechat/token`)
           .timeout({
             response: 30000, // Wait 30 seconds for the server to start sending,
             deadline: 30000 // but allow 1 minute for the file to finish loading.
@@ -170,7 +173,7 @@ class CloudApis extends RequestManager {
 
       case 'setAvatar':
         r = request
-          .put(`${cloudAddress}/user/avatar`)
+          .put(`${this.cloudAddress}/user/avatar`)
           .set('Content-Type', 'application/octet-stream')
           .set('Authorization', this.token)
           .send(args)

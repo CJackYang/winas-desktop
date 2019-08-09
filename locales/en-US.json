@@ -199,6 +199,7 @@
   "Device Offline": "Offline",
   "Login Error": "Failed to sign in",
   "No Bind Device Title": "No authorized PocketDrive",
+  "No Bind Device Text": "Please authorize a PocketDrive device by our mobile app firstly",
 
   "==== login/DeviceSelect.jsx====": "",
   "Client Version %s": "Version %s",

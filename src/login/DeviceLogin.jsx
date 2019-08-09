@@ -7,7 +7,7 @@ import FlatButton from '../common/FlatButton'
 import Device from '../login/Device'
 import ScrollBar from '../common/ScrollBar'
 import { LIButton } from '../common/Buttons'
-import { RefreshIcon } from '../common/Svg'
+import { RefreshIcon, FailedIcon } from '../common/Svg'
 import CircularLoading from '../common/CircularLoading'
 
 class ChangeDevice extends React.Component {
@@ -28,6 +28,7 @@ class ChangeDevice extends React.Component {
 
     this.state = {
       loading: true,
+      requsting: true,
       list: []
     }
 
@@ -39,12 +40,11 @@ class ChangeDevice extends React.Component {
       })
 
       this.props.cloud.req('stationList', null, (err, res) => {
-        console.log(err, res)
         if (err) {
           this.setState({ list: [], loading: false, error: true })
         } else {
           const list = [...res.ownStations, ...res.sharedStations]
-          this.setState({ list, loading: false })
+          this.setState({ list, loading: false, requsting: false })
         }
       })
     }
@@ -106,10 +106,17 @@ class ChangeDevice extends React.Component {
     this.remoteLogin(cdev)
   }
 
+  changeToNoDevice () {
+    this.setState({ list: [], loading: false, requsting: false })
+  }
+
   componentDidUpdate (prevProps, prevState) {
     if (this.props.cdev && prevProps && prevProps.status !== 'connectDev' &&
      this.props && this.props.status === 'connectDev') {
       this.selectDevice(this.props.cdev, this.props.list)
+    } else if (!this.props.cdev && this.props.list && !this.props.list.length &&
+      !this.state.list.length && this.state.requsting) {
+      this.changeToNoDevice()
     }
   }
 
@@ -154,10 +161,24 @@ class ChangeDevice extends React.Component {
     )
   }
 
+  renderFailed () {
+    return (
+      <div style={{ width: 380, backgroundColor: '#FFF', zIndex: 100, margin: '0 auto' }} key="failed">
+        <div style={{ height: 64, paddingTop: 16 }} className="flexCenter">
+          <FailedIcon style={{ color: '#f44336', height: 58, width: 58 }} />
+        </div>
+        <div style={{ height: 32 }} />
+        <div style={{ fontSize: 14, color: '#f44336' }} className="flexCenter">
+          { i18n.__('No Bind Device Text') }
+        </div>
+      </div>
+    )
+  }
+
   render () {
     const isFailed = !!this.state.error
     const isLogging = !!this.state.loggingDevice
-    const isNoDevice = this.state.status === 'noDevice'
+    const isNoDevice = this.state.list.length === 0
     return (
       <div style={{ width: '100%', zIndex: 100, height: '100%', position: 'relative' }} >
         {/* header */}
@@ -200,9 +221,9 @@ class ChangeDevice extends React.Component {
               <div style={{ height: 128 }} className="flexCenter">
                 <CircularLoading />
               </div>
-            )
-            : this.renderList(isLogging ? [this.state.loggingDevice] : this.state.list)
-
+            ) : isNoDevice
+              ? this.renderFailed()
+              : this.renderList(isLogging ? [this.state.loggingDevice] : this.state.list)
         }
       </div>
     )

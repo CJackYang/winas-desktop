@@ -5,7 +5,6 @@ import querystring from 'querystring'
 
 import parseRes from './parseRes'
 import Request from './Request'
-import { cloudAddress } from '../../config/config'
 
 /* this module encapsulate most fruitmix apis */
 class Fruitmix extends EventEmitter {
@@ -45,8 +44,8 @@ class Fruitmix extends EventEmitter {
 
     /* adapter of cloud apis */
     this.reqCloud = (ep, qsOrData, type, isFormdata) => {
-      const url = `${cloudAddress}/station/${deviceSN}/json`
-      const url2 = `${cloudAddress}/station/${deviceSN}/pipe`
+      const url = `${this.cloudAddress}/station/${deviceSN}/json`
+      const url2 = `${this.cloudAddress}/station/${deviceSN}/pipe`
       const data = {
         verb: type,
         urlPath: `/${ep}`,
@@ -59,6 +58,10 @@ class Fruitmix extends EventEmitter {
       const qs = querystring.stringify({ data: JSON.stringify(data) })
       return request.post(`${url2}?${qs}`).set('Authorization', token).set('cookie', this.cookie)
     }
+  }
+
+  get cloudAddress () {
+    return global.config.cloudAddress || 'https://aws-cn.aidingnan.com/c/v1'
   }
 
   setState (name, nextState) {
@@ -196,7 +199,7 @@ class Fruitmix extends EventEmitter {
         if (this.isCloud) { // connecting via Cloud, reset password
           r = this.aput(`users/${this.userUUID}/password`, { password: args.newPassword })
         } if (args.stationID) { // login via WeChat and connecting via LAN, rest password
-          const url = `${cloudAddress}/c/v1/stations/${args.stationID}/json`
+          const url = `${this.cloudAddress}/c/v1/stations/${args.stationID}/json`
           const resource = Buffer.from(`/users/${this.userUUID}/password`).toString('base64')
           r = request.post(url).set('Authorization', args.token).send({ resource, method: 'PUT', password: args.newPassword })
         } else {
