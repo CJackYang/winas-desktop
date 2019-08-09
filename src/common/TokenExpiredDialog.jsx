@@ -2,9 +2,9 @@ import i18n from 'i18n'
 import React from 'react'
 import { ipcRenderer } from 'electron'
 
-import Dialog from '../common/PureDialog'
-import FlatButton from '../common/FlatButton'
-import CircularLoading from '../common/CircularLoading'
+import Dialog from './PureDialog'
+import FlatButton from './FlatButton'
+import CircularLoading from './CircularLoading'
 
 class TokenExpiredDialog extends React.PureComponent {
   /**

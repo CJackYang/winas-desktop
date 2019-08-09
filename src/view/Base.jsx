@@ -5,7 +5,7 @@ import NavigationMenu from 'material-ui/svg-icons/navigation/menu'
 import { IconButton } from 'material-ui'
 import EventEmitter from 'eventemitter3'
 
-import ConfirmDialog from '../common/ConfirmDialog'
+import TokenExpiredDialog from '../common/TokenExpiredDialog'
 import convertCode from '../transmission/convertCode'
 
 class Base extends EventEmitter {
@@ -184,11 +184,13 @@ class Base extends EventEmitter {
               : isDirNotFound ? i18n.__('Folder Not Found') : textViaCode }
           </div>
           {/* show dialog when token expired */}
-          <ConfirmDialog
+          <TokenExpiredDialog
             open={isUnauthorized}
             onConfirm={() => this.ctx.props.logout()}
-            title={i18n.__('Token Expired')}
-            text={i18n.__('Token Expired Text')}
+            onClose={() => (typeof this.refresh === 'function') && this.refresh()}
+            cloud={this.ctx.props.cloud}
+            account={this.ctx.props.account}
+            wisnucLogin={this.ctx.props.wisnucLogin}
           />
         </div>
       </div>
