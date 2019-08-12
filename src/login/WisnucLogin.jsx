@@ -15,6 +15,9 @@ import { EyeOpenIcon, EyeOffIcon, WinCloseIcon, CheckBoxOutlineIcon,
 
 let firstLogin = true
 
+const prodCloudAddress = 'https://aws-cn.aidingnan.com/c/v1'
+const testCloudAddress = 'https://test.aidingnan.com/c/v1'
+
 class WisnucLogin extends React.Component {
   constructor (props) {
     super(props)
@@ -169,6 +172,26 @@ class WisnucLogin extends React.Component {
     this.toggleMenu = (event) => {
       if (!this.state.open && event && event.preventDefault) event.preventDefault()
       this.setState({ open: event !== 'clickAway' && !this.state.open, anchorEl: event.currentTarget })
+    }
+
+    // DoubleClick one time, cheatClick four times to OPEN_DEVTOOLS
+    this.cheatCount = 0
+    this.cheatStart = false
+
+    this.cheatDoubleClick = (e) => {
+      this.cheatStart = true
+      this.cheatCount = 0
+    }
+
+    this.cheatClick = (e) => {
+      this.cheatCount += 1
+      if (this.cheatCount === 4 && this.cheatStart) {
+        this.cheatCount = 0
+        this.cheatStart = false
+        const cloudAddress = global.config.global.cloudAddress === prodCloudAddress
+          ? testCloudAddress : prodCloudAddress
+        this.props.ipcRenderer.send('SETCONFIG', { cloudAddress })
+      }
     }
   }
 
@@ -458,7 +481,7 @@ class WisnucLogin extends React.Component {
           <div>
             { `©${new Date().getFullYear()}${i18n.__('Copyright Info')}` }
           </div>
-          <div style={{ marginLeft: 20 }}>
+          <div style={{ marginLeft: 20 }} onClick={this.cheatClick} onDoubleClick={this.cheatDoubleClick}>
             { i18n.__('Client Version %s', global.config && global.config.appVersion) }
           </div>
         </div>
@@ -539,7 +562,25 @@ class WisnucLogin extends React.Component {
             )
         }
 
-        {/* Phi Login Failed */}
+        {/* toggle cloudAddress: production or test */}
+        <div
+          style={{
+            position: 'fixed',
+            top: 16,
+            left: -16,
+            width: 72,
+            color: '#FFFFFF',
+            fontSize: 12,
+            fontWeight: 500,
+            backgroundColor: '#b71c1c',
+            transform: 'rotate(-45deg)'
+          }}
+          className="flexCenter"
+        >
+          { global.config.global.cloudAddress === testCloudAddress && 'Test' }
+        </div>
+
+        {/* confirmDelUser */}
         <Dialog open={!!this.state.confirmDelUser} onRequestClose={() => this.setState({ confirmDelUser: false })} modal >
           { !!this.state.confirmDelUser && this.renderConfirmDelUser() }
         </Dialog>

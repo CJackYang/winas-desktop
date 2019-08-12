@@ -38,7 +38,7 @@ class CloudApis extends RequestManager {
   }
 
   get cloudAddress () {
-    return global.config.cloudAddress || 'https://aws-cn.aidingnan.com/c/v1'
+    return global.config.global.cloudAddress || 'https://aws-cn.aidingnan.com/c/v1'
   }
 
   aget (ep) {

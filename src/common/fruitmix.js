@@ -61,7 +61,7 @@ class Fruitmix extends EventEmitter {
   }
 
   get cloudAddress () {
-    return global.config.cloudAddress || 'https://aws-cn.aidingnan.com/c/v1'
+    return global.config.global.cloudAddress || 'https://aws-cn.aidingnan.com/c/v1'
   }
 
   setState (name, nextState) {
