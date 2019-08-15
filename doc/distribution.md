@@ -35,3 +35,11 @@ arch=ia32 npm run dist-ia32 && arch=x64 npm run dist-x64
 ```bash
 npm run dist-mac
 ```
+
+### linux下打包
+
+生成deb文件，打包完成的文件会放在dist目录下
+
+```bash
+npm run dist-linux
+```

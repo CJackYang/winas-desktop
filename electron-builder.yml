@@ -51,7 +51,7 @@ linux:
     - deb
     - zip
     - AppImage
-  icon: logo/icon
+  icon: logo/icon.icns
 
 appImage:
   systemIntegration: doNotAsk
