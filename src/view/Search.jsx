@@ -64,17 +64,17 @@ class Search extends Home {
         case 'pdf':
           return 'PDF'
         case 'word':
-          return 'DOCX.DOC'
+          return 'DOCX.DOC.PAGES'
         case 'excel':
-          return 'XLSX.XLS'
+          return 'XLSX.XLS.NUMBERS'
         case 'ppt':
-          return 'PPTX.PPT'
+          return 'PPTX.PPT.KEY'
         case 'image':
-          return 'JPEG.PNG.JPG.GIF.BMP.RAW'
+          return 'JPEG.PNG.GIF.BMP.TIFF.HEIC'
         case 'video':
-          return 'RM.RMVB.WMV.AVI.MP4.3GP.MKV.MOV.FLV'
+          return 'RM.RMVB.WMV.AVI.MPEG.MP4.3GP.MOV.FLV.MKV'
         case 'audio':
-          return 'WAV.MP3.APE.WMA.FLAC'
+          return 'RA.WMA.MP3.OGG.MKA.WAV.APE.FLAC'
         default:
           return ''
       }
