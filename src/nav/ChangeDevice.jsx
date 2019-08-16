@@ -38,7 +38,6 @@ class ChangeDevice extends React.Component {
       })
 
       this.props.cloud.req('stationList', null, (err, res) => {
-        console.log(err, res)
         if (err) {
           this.setState({ list: [], loading: false, error: err })
         } else {
@@ -134,6 +133,7 @@ class ChangeDevice extends React.Component {
   }
 
   renderList (list) {
+    console.log('renderList', list)
     const rowCount = list.length
     const rowHeight = 80
     return (
