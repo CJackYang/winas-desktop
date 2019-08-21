@@ -1,4 +1,4 @@
-appId: com.aidingnan.app
+appId: com.aidingnan.winas-desktop
 copyright: "Shanghai Aidingnan Technology Co., Ltd."
 productName: 口袋网盘
 
@@ -13,6 +13,7 @@ files:
   - "**/*"
 
 dmg:
+  sign: false
   contents:
     - type: link
       path: /Applications
@@ -31,6 +32,10 @@ mac:
     - zip
   category: public.app-category.tools
   icon: logo/icon.icns
+  hardenedRuntime: true
+  entitlements: logo/entitlements.mac.plist
+  entitlementsInherit: logo/entitlements.mac.plist
+  gatekeeperAssess: false
 
 win:
   target: nsis
@@ -52,7 +57,3 @@ linux:
     - zip
     - AppImage
   icon: logo/icon.icns
-
-appImage:
-  systemIntegration: doNotAsk
-
