@@ -38,6 +38,8 @@ const convert = (code) => {
       return i18n.__('EOVERSIZE')
     case 'EUNDERSIZE':
       return i18n.__('EUNDERSIZE')
+    case 'EHOSTDOWN':
+      return i18n.__('EHOSTDOWN')
     case 'ENAME':
       return i18n.__('ENAME')
     case 'ETYPE':

@@ -63,6 +63,7 @@ class RunningTask extends React.Component {
   }
 
   formatSpeed (size) {
+    if (!size) return i18n.__('Device Busy')
     return `${prettySize(size)}/s`
   }
 

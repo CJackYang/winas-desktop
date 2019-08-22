@@ -217,6 +217,7 @@
   "ENETLOST":"Network not available.",
   "ENETUNREACH": "Network unreachable.",
   "ECONNEND": "Connection lost.",
+  "EHOSTDOWN": "Host is down.",
   "ENOENT": "No such file or directory.",
   "EPERM": "Operation not permitted.",
   "EACCES": "Permission denied.",
@@ -319,7 +320,8 @@
   "Task Unknown State": "Unknown state",
   "More Than One Day": "> 1day",
   "Resume": "Resume",
-  "Pause": "Pasue",
+  "Pause": "Pause",
+  "Device Busy": "Device busy, waiting",
 
   "==== file/TransmissionContainer.jsx ====": "",
   "Running Task Title %s": "Running (%s)",
