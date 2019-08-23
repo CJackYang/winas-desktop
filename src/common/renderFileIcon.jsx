@@ -40,6 +40,7 @@ const renderFileIcon = (name, metadata, setSize, inDark) => {
     GIF: PhotoIcon,
     BMP: PhotoIcon,
     TIFF: PhotoIcon,
+    HEIC: PhotoIcon,
     RAW: PhotoIcon,
     RAR: TypeUnknownIcon,
     ZIP: TypeUnknownIcon,
