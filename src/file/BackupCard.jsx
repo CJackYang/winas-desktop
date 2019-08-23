@@ -579,7 +579,7 @@ class BackupCard extends React.PureComponent {
                   height: 6,
                   borderRadius: 3,
                   backgroundColor: '#ffc107',
-                  width: `${Math.round(this.state.finishCount / this.state.count * 100) || 0}%`
+                  width: `${Math.round(this.state.completeSize / this.state.size * 100) || 0}%`
                 }}
               />
             </div>
