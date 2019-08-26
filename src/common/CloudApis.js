@@ -246,13 +246,13 @@ class CloudApis extends RequestManager {
   }
 
   testLAN (ip, cb) {
-    const resTime = process.env.CONN_MODE === 'remote' ? 2 : 2000
+    const resTime = process.env.CONN_MODE === 'remote' ? 2 : 3000
     request
       .get(`http://${ip}:3001/winasd/info`)
       .set('Content-Type', 'application/json')
       .timeout({
-        response: resTime, // Wait 2 seconds for the server to start sending,
-        deadline: resTime // but allow 2 seconds for the file to finish loading.
+        response: resTime, // Wait 3 seconds for the server to start sending,
+        deadline: resTime // but allow 3 seconds for the file to finish loading.
       })
       .end(cb)
   }
@@ -263,6 +263,7 @@ class CloudApis extends RequestManager {
       await Promise.promisify(this.testLAN).bind(this)(ip)
       isLAN = true
     } catch (e) {
+      console.log('testLANAsync error', e)
       isLAN = false
     }
     return isLAN
