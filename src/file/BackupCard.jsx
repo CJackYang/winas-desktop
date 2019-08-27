@@ -526,7 +526,7 @@ class BackupCard extends React.PureComponent {
 
               {/* rest time */}
               <div style={{ height: 24, display: 'flex', alignItems: 'center' }} >
-                { this.state.restTime }
+                { !!this.state.hasFileUpload && this.state.restTime }
               </div>
             </div>
           )
