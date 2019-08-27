@@ -31,14 +31,12 @@ class WisnucLogin extends React.Component {
       error: '',
       showPwd: false,
       autoLogin: false,
-      status: 'phone'
+      status: 'phone',
+      ip: ''
     }
 
     this.onPhoneNumber = (pn) => {
-      this.setState({
-        pn,
-        pnError: pn && !isPhoneNumber(pn) ? i18n.__('Invalid Phone Number') : ''
-      })
+      this.setState({ pn, ip: pn })
     }
 
     this.onPassword = (pwd) => {
@@ -59,21 +57,7 @@ class WisnucLogin extends React.Component {
     this.togglePwd = () => this.setState({ showPwd: !this.state.showPwd })
 
     this.checkPhone = () => {
-      this.setState({ loading: true })
-      this.props.cloud.req('checkUser', { phone: this.state.pn }, (err, res) => {
-        if (err || !res || !res.userExist) this.setState({ pnError: i18n.__('User Not Exist'), loading: false })
-        else {
-          // replace previous accounts
-          const accounts = this.state.accounts || []
-          const index = accounts.findIndex(user => user.pn === this.state.pn)
-          if (index > -1) accounts.splice(index, 1)
-          accounts.unshift(Object.assign({ pn: this.state.pn }, res))
-
-          this.setState({ status: 'password', loading: false, accounts, avatarUrl: res.avatarUrl })
-          const newUserInfo = Object.assign({}, this.cloud || {}, { accounts })
-          this.props.ipcRenderer.send('SETCONFIG', { cloud: newUserInfo })
-        }
-      })
+      this.setState({ status: 'password', loading: false, accounts: [], avatarUrl: '' })
     }
 
     this.delUser = (user) => {
@@ -84,47 +68,31 @@ class WisnucLogin extends React.Component {
     }
 
     this.login = () => {
-      this.setState({ loading: true })
-      const clientId = window.config.machineId
-      this.props.cloud.req(
-        'token',
-        { phonenumber: this.state.pn, password: this.state.pwd, clientId },
-        (err, res) => {
-          if (err || !res) {
-            const code = res && res.code
-            const msg = res && res.message
-            if (code === 400) this.setState({ pwdError: i18n.__('Wrong Password'), loading: false })
-            else if (code === 60008) this.setState({ pwdError: i18n.__('Wrong Password'), loading: false })
-            else if (msg) this.setState({ pwdError: msg, loading: false })
-            else this.setState({ failed: true, loading: false, pwdError: i18n.__('Login Failed') })
-          } else {
-            // replace previous accounts
-            const accounts = this.state.accounts || []
-            const index = accounts.findIndex(user => user.pn === this.state.pn)
-            if (index > -1) accounts.splice(index, 1)
-            accounts.unshift(Object.assign({ pn: this.state.pn }, res))
-
-            this.props.cloud.req('stationList', null, (e, r, cookie) => {
-              if (e || !r) {
-                this.setState({ failed: true, loading: false })
-              } else {
-                const cloud = Object.assign({}, res, {
-                  cookie,
-                  accounts,
-                  pn: this.state.pn,
-                  winasUserId: res.id,
-                  autoLogin: !!this.state.autoLogin,
-                  token: this.state.autoLogin ? res.token : null
-                })
-                this.setState({ loading: false, pwd: '' })
-                const list = [...r.ownStations, ...r.sharedStations]
-                const lastSN = r.lastUseDeviceSn
-                this.props.onSuccess({ lastSN, list, phonenumber: this.state.pn, winasUserId: res.id, cloud })
-              }
-            })
-          }
-        }
-      )
+      this.props.cloud.LANUser(this.state.ip, (error, resp) => {
+        if (error) alert(error)
+        console.log(resp)
+        const user = resp.body[0]
+        this.props.cloud.LANlogin(this.state.ip, user.uuid, this.state.pwd, (err, res) => {
+          if (error) alert(error)
+          console.log(err, res)
+          const token = res.body.token
+          const dev = Object.assign({
+            token: { isFulfilled: () => true, ctx: user, data: { token } },
+            mdev: { deviceSN: '1234', address: this.state.ip },
+            // add fake listeners, TODO: remove this
+            on: () => {},
+            removeAllListeners: () => {}
+          })
+          const account = { phonenumber: resp.phoneNumber, winasUserId: '1234', cloud: {}, name: resp.username }
+          this.props.wisnucLogin(account)
+          this.props.deviceLogin({
+            dev,
+            user,
+            selectedDevice: dev,
+            isCloud: false
+          })
+        })
+      })
     }
 
     this.fakeLogin = () => {
@@ -303,15 +271,15 @@ class WisnucLogin extends React.Component {
     const { status, pn, pnError, pwd, pwdError } = this.state
 
     let next = () => {}
-    let disabled = false
+    const disabled = false
     switch (status) {
       case 'phone':
         next = this.checkPhone
-        disabled = !pn || pn.length !== 11 || pnError
+        // disabled = !pn || pn.length !== 11 || pnError
         break
       case 'password':
         next = this.login
-        disabled = !pwd || pwdError
+        // disabled = !pwd || pwdError
         break
       default:
         break

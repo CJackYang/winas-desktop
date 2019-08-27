@@ -257,6 +257,21 @@ class CloudApis extends RequestManager {
       .end(cb)
   }
 
+  LANlogin (ip, username, password, cb) {
+    request
+      .get(`http://${ip}:3000/token`)
+      .auth(username, password)
+      .set('Accept', 'application/json')
+      .end(cb)
+  }
+
+  LANUser (ip, cb) {
+    request
+      .get(`http://${ip}:3000/users`)
+      .set('Accept', 'application/json')
+      .end(cb)
+  }
+
   async testLANAsync (ip) {
     let isLAN = false
     try {
