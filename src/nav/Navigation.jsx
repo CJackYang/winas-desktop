@@ -12,7 +12,7 @@ import ChangeDevice from './ChangeDevice'
 
 import Home from '../view/Home'
 import Search from '../view/Search'
-import Public from '../view/Public'
+// import Public from '../view/Public'
 import Backup from '../view/Backup'
 import Transfer from '../view/Transfer'
 
@@ -39,7 +39,7 @@ class NavViews extends React.Component {
 
     this.install([
       { name: 'home', View: Home },
-      { name: 'public', View: Public },
+      // { name: 'public', View: Public },
       { name: 'backup', View: Backup },
       { name: 'search', View: Search },
 

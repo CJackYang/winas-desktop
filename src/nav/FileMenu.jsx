@@ -47,7 +47,8 @@ class NavDrawer extends React.Component {
     return (
       <div style={{ width: '100%', height: '100%' }} >
         {
-          ['home', 'public', 'backup'].map(v => (
+          ['home', 'backup'].map(v => (
+          // ['home', 'public', 'backup'].map(v => (
             <MenuButton
               primaryColor={primaryColor}
               key={v}

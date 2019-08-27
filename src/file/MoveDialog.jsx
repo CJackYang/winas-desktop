@@ -158,8 +158,8 @@ class MoveDialog extends React.PureComponent {
       } else if (currentDir.type === 'root') { // root
         const drives = this.props.apis.drives.value()
         const list = [
-          { name: i18n.__('Home Title'), type: 'directory', uuid: drives.find(d => d.tag === 'home').uuid, tag: 'home' },
-          { name: i18n.__('Public Drive'), type: 'built-in', uuid: drives.find(d => d.tag === 'built-in').uuid, tag: 'built-in' }
+          { name: i18n.__('Home Title'), type: 'directory', uuid: drives.find(d => d.tag === 'home').uuid, tag: 'home' }
+          // { name: i18n.__('Public Drive'), type: 'built-in', uuid: drives.find(d => d.tag === 'built-in').uuid, tag: 'built-in' }
         ]
         setImmediate(() => this.updateState(path, currentDir, list))
       }

@@ -18,7 +18,10 @@ import DialogOverlay from '../common/PureDialog'
 import MenuItem from '../common/MenuItem'
 import sortByType from '../common/sort'
 import { BreadCrumbItem, BreadCrumbSeparator } from '../common/BreadCrumb'
-import { RefreshAltIcon, DeleteIcon, ListIcon, GridIcon, FolderIcon, FolderOutlineIcon, AddIcon, DownloadIcon, InfoIcon, EditIcon, ShareIcon, CopyIcon, MoveIcon, NewFolderIcon, UploadFold, UploadFile } from '../common/Svg'
+import {
+  RefreshAltIcon, DeleteIcon, ListIcon, GridIcon, FolderIcon, FolderOutlineIcon,
+  AddIcon, DownloadIcon, InfoIcon, EditIcon, CopyIcon, MoveIcon, NewFolderIcon, UploadFold, UploadFile
+} from '../common/Svg'
 import renderFileIcon from '../common/renderFileIcon'
 import { xcopyMsg } from '../common/msg'
 import History from '../common/history'
@@ -1259,14 +1262,14 @@ class Home extends Base {
               : (
                 <div>
                   <div>
-                    {
+                    {/*
                       !this.isPublic &&
                       <MenuItem
                         leftIcon={<ShareIcon style={style} />}
                         primaryText={i18n.__('Share to Public')}
                         onClick={this.shareToAll}
                       />
-                    }
+                    */}
                     <MenuItem
                       leftIcon={<CopyIcon style={style} />}
                       primaryText={i18n.__('Copy to')}
