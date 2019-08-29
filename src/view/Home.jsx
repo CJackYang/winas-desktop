@@ -320,9 +320,10 @@ class Home extends Base {
 
         const op = []
         for (let i = 0; i < arr.length; i++) {
-          const entryName = arr[i].name
+          const entryName = arr[i].bname || arr[i].name
           const entryUUID = arr[i].uuid
-          op.push({ driveUUID, dirUUID, entryName, entryUUID })
+          const hash = arr[i].hash
+          op.push({ driveUUID, dirUUID, entryName, entryUUID, hash })
         }
         for (let j = 0; j <= (op.length - 1) / 512; j++) { // delete no more than 512 files per post
           await this.ctx.props.apis.requestAsync('deleteDirOrFile', op.filter((a, i) => (i >= j * 512) && (i < (j + 1) * 512)))
@@ -390,7 +391,7 @@ class Home extends Base {
     this.delete = () => {
       this.setState({ deleteLoading: true })
       const fire = this.isUSB ? this.deletePhyAsync
-        : (this.isMedia || this.state.showSearch) ? this.deleteMediaOrSearchAsync
+        : (this.isMedia || this.state.showSearch || this.isSearch) ? this.deleteMediaOrSearchAsync
           : this.deleteAsync
 
       fire().then(() => {
