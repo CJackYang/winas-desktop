@@ -47,7 +47,7 @@ class Device extends RequestManager {
     switch (name) {
       case 'info':
         r = request
-          .get(`http://${this.mdev.address}:3001/info`)
+          .get(`http://${this.mdev.address}:3001/winasd/info`)
           .timeout({
             response: resTime, // Wait 5 seconds for the server to start sending,
             deadline: 60000 // but allow 1 minute for the file to finish loading.
