@@ -246,13 +246,13 @@ class CloudApis extends RequestManager {
   }
 
   testLAN (ip, cb) {
-    const resTime = process.env.CONN_MODE === 'remote' ? 2 : 3000
+    const resTime = process.env.CONN_MODE === 'remote' ? 2 : 5000
     request
       .get(`http://${ip}:3001/winasd/info`)
       .set('Content-Type', 'application/json')
       .timeout({
-        response: resTime, // Wait 3 seconds for the server to start sending,
-        deadline: resTime // but allow 3 seconds for the file to finish loading.
+        response: resTime, // Wait 5 seconds for the server to start sending,
+        deadline: resTime // but allow 5 seconds for the file to finish loading.
       })
       .end(cb)
   }
