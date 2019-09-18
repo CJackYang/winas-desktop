@@ -54,14 +54,15 @@ class ChangeDevice extends React.Component {
     const { account } = this.props
     const args = { deviceSN: device.sn }
     const { token, cookie } = this.props.cloud
-    // delay 500ms to fix testLAN error
-    await Promise.delay(500)
-    const [tokenRes, users, space, isLAN] = await Promise.all([
+
+    const [tokenRes, users, space] = await Promise.all([
       this.props.cloud.reqAsync('LANToken', args),
       this.props.cloud.reqAsync('localUsers', args),
-      this.props.cloud.reqAsync('space', args),
-      this.props.cloud.testLANAsync(device.LANIP)
+      this.props.cloud.reqAsync('space', args)
     ])
+
+    // delay testLAN
+    const isLAN = await this.props.cloud.testLANAsync(device.LANIP)
 
     const LANToken = tokenRes.token
     const user = Array.isArray(users) && users.find(u => u.winasUserId === account.winasUserId)
