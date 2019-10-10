@@ -75,6 +75,8 @@ class Winas extends React.Component {
 
   deviceLogin ({ dev, user, selectedDevice, isCloud }) {
     console.log(dev, user, selectedDevice, isCloud)
+    const msg = `${dev.sn};${user.uuid};${process.platform};${isCloud}}`
+    window._czc.push(['_trackEvent', 'info', 'login', msg])
     if (this.state.selectedDevice) {
       ipcRenderer.send('LOGOUT')
       this.setState({ view: '', selectedDevice: null, jump: null }, () => this.deviceLogin({ dev, user, selectedDevice, isCloud }))

@@ -34,3 +34,9 @@ ipcRenderer.on('CONFIG_UPDATE', (event, config) => {
   // i18n.setLocale('en-US')
   render()
 })
+
+/* send umeng log */
+ipcRenderer.on('UMENG_LOG', (event, data) => {
+  const { category, action, msg } = data
+  window._czc.push(['_trackEvent', category, action, msg])
+})
