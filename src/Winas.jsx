@@ -1,6 +1,6 @@
 import i18n from 'i18n'
 import React from 'react'
-import { ipcRenderer } from 'electron'
+import { ipcRenderer, remote } from 'electron'
 import { Snackbar } from 'material-ui'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
@@ -75,7 +75,10 @@ class Winas extends React.Component {
 
   deviceLogin ({ dev, user, selectedDevice, isCloud }) {
     console.log(dev, user, selectedDevice, isCloud)
-    const msg = `${dev.sn};${user.uuid};${process.platform};${isCloud}}`
+    const machineId = window.config.machineId
+    const rel = remote.require('os').release()
+    const msg = `${dev.sn};${user.uuid};${process.platform};${rel};${machineId};${isCloud}}`
+    console.log('msg', msg)
     window._czc.push(['_trackEvent', 'info', 'login', msg])
     if (this.state.selectedDevice) {
       ipcRenderer.send('LOGOUT')
