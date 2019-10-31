@@ -82,6 +82,7 @@ const renderFileIcon = (name, metadata, setSize, inDark) => {
     GIF: '#ea4335',
     BMP: '#ea4335',
     TIFF: '#ea4335',
+    HEIC: '#ea4335',
     RAW: '#ea4335'
   }
 
