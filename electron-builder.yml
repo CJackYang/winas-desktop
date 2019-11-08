@@ -24,7 +24,7 @@ dmg:
       y: 150
   background:
     logo/background.png
-  artifactName: Pocket-drive-setup-${version}.${ext}
+  artifactName: KouDaiWangPan-${version}.${ext}
 
 mac:
   target:
@@ -49,7 +49,7 @@ nsis:
   language: "1033"
   runAfterFinish: false
   deleteAppDataOnUninstall: true
-  artifactName: Pocket-drive-setup-${version}-${env.arch}.${ext}
+  artifactName: KouDaiWangPan-${version}-${env.arch}.${ext}
 
 linux:
   target:
@@ -57,3 +57,4 @@ linux:
     - zip
     - AppImage
   icon: logo/icon.icns
+  artifactName: KouDaiWangPan-${version}.${ext}
