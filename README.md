@@ -25,3 +25,19 @@ CONN_MODE=remote npm start  # remote mode
 # script of running dev mode on Windows
 $env:NODE_ENV='dev';.\口袋网盘.exe
 ```
+
+### Distribute
+
+```bash
+# Windows x64
+arch=x64 npm run dist-x64
+
+# Windows x32
+arch=ia32 npm run dist-ia32
+
+# macOS, need notarize, see ~/Desktop/desktop/notarize-app.txt
+npm run dist-mac
+
+# linux
+npm run dist-linux
+```
