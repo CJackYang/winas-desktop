@@ -104,13 +104,47 @@ npm run dist-linux
 
   - 目前支持使用帐户密码和微信来登录云帐户，登录后获取访问云api的token，同时获取已绑定的设备列表
   
-  - 登录用户选择的特定口袋网盘，主要是通过云获取口袋网盘的局域网用的token，同时通过调用3001端口的`winasd/info` api 判断设备是否在局域网内。
+  - 登录用户选择的特定口袋网盘，主要是通过云获取口袋网盘的局域网用的token，同时通过调用3001端口的`winasd/info` api 判断设备是否在局域网内
   
   - 在局域网内则使用ip直接访问，在外网环境则走云的pipe通道访问
 
-+ 文件的上传、下载和备份 主要代码在`lib/backup.js`, `lib/backupTransform.js`, `lib/upload.js`, `lib/uploadTransform.js`, `lib/download.js`, `lib/downloadTransform.js`, `lib/transform.js`
+  - 登录成功后会通过ipc通讯同步信息，如token、ip等到Node端
 
-  - 这部
++ 文件的上传、下载 主要代码在 `lib/upload.js`, `lib/uploadTransform.js`, `lib/download.js`, `lib/downloadTransform.js`, `lib/transform.js`
+
+  - 上传下载的操作在Browser层触发，通过ipc通讯在Node端进行实际的文件读写
+
+  - 下载文件就是简单的`get`操作，通过在Header中 `set Range`的方式实现断点续传
+
+  - 上传文件需要预先将文件按1G为单位切片，计算每段文件的sha256值和文件整体的fingerprint，由`filehash.js`组件实现
+
+  - 计算得到的文件sha256和fingerpirnt和通过fs-xattr(Mac & Linux)或fs-ads (Windows)存储下来，在重试比对中可避免重复计算
+
+  - 上传文件使用的是formdata协议，通过stream的方式实现的，其中通过`stream.Transform`实现了边计算sha256值，边上传文件的功能
+
+  - 通过`transmissionUpdate.js`组件汇总处理传输进度、状态等消息信息
+
+  - 通过`db.js`持久化传输任务数据
+
++ 备份功能 主要代码在`lib/backup.js`, `lib/backupTransform.js`，`src/file/BackupCard.jsx`,`src/view/Backup.jsx`
+
+  - 备份过程与上传的基本逻辑是一致的，主要是多了监听文件夹变化和比对文件差异的逻辑
+
+  - 通过`fs.watch`监听文件夹内的文件改变，发生变化的时候触发更新（debounce为两秒）
+
+  - 通过在`xattr`或`ads`中记录文件的sha256和是否已备份过的标记实现快速比对、更新备份
+
++ 文件页面结构 主要代码 `src/nav/Navigator.jsx`, `src/view/`
+
+  - `src/nav/Navigator.jsx`是文件页面全局导航组件，通过调用`navTo`方法切换页面，各个页面的入口文件均在`src/view/`
+
+  - `src/view/Home.jsx`中实现了主要的文件操作，包括选择、右键菜单操作、列表/网格模式切换等
+
+  - `Public`, `Backup`, `Search` 都继承了`Home`组件，分别实现了共享空间、备份空间、搜索页面的UI
+
+  - `src/file/FileContent.jsx`是文件内容页的组件，`GridView`, `RenderListByRow`分别是网格模式和列表模式UI实现
+
+  - `src/file/Preview.jsx`组件实现了对照片、视频、音频、PDF、Office文档的预览
 
 + 多语言
 
