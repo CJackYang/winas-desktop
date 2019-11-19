@@ -1,0 +1,17 @@
+environment:
+  nodejs_version: "10"
+  skip_tags: false
+
+install:
+  - ps: Install-Product node $env:nodejs_version
+  - node -v
+  - npm -v
+  - npm install
+  - npm run webpack2
+
+build: off
+
+build_script:
+  - arch=x64 ./node_modules/.bin/electron-builder ./electron-builder.yml --win --x64 -p always
+  - arch=ia32 ./node_modules/.bin/electron-builder ./electron-builder.yml --win --ia32 -p always
+test: off

@@ -48,6 +48,9 @@ npm start
 npm run webpack             # webpack with HMR
 NODE_ENV=dev npm start      # start with devtools
 CONN_MODE=remote npm start  # remote mode
+```
+
+```powershell
 # script of running dev mode on Windows
 $env:NODE_ENV='dev';.\口袋网盘.exe
 ```
@@ -98,6 +101,11 @@ npm run dist-mac
 ```bash
 npm run dist-linux
 ```
+
++ CI打包
+
+windows使用[appveyor](https://www.appveyor.com/)， mac使用[travis](https://travis-ci.org/), 配置文件分别为`appveyor.yml`和`.travis.yml`, 均可使用github帐户登录，打包成功后会自动在github里添加新的release
+
 ### 项目逻辑
 
 + 登录逻辑 主要代码在`src/login`
@@ -138,13 +146,27 @@ npm run dist-linux
 
   - `src/nav/Navigator.jsx`是文件页面全局导航组件，通过调用`navTo`方法切换页面，各个页面的入口文件均在`src/view/`
 
-  - `src/view/Home.jsx`中实现了主要的文件操作，包括选择、右键菜单操作、列表/网格模式切换等
+  - `src/view/Home.jsx`中实现了主要的文件操作，包括选择、右键菜单操作、列表/网格模式切换、拖拽上传/移动等
+
+  - 右键菜单操作主要有上传、删除、重命名、移动、复制、预览文件、查看属性等
 
   - `Public`, `Backup`, `Search` 都继承了`Home`组件，分别实现了共享空间、备份空间、搜索页面的UI
 
   - `src/file/FileContent.jsx`是文件内容页的组件，`GridView`, `RenderListByRow`分别是网格模式和列表模式UI实现
 
   - `src/file/Preview.jsx`组件实现了对照片、视频、音频、PDF、Office文档的预览
+
+  - 照片缩略图和原图都采用在node端下载并缓存，在Browser端直接引用绝对路径的方式显示，具体实现为`src/file/Thumb.jsx`, `lib/media.js`
+
+  - 文件列表都是基于`react-virtualized`库实现的虚拟列表，因为有自定义滚动条的需求，封装成了`src/common/ScrollBar.jsx`
+
++ API管理
+
+  - 应用使用的API主要分两套，即云API和口袋网盘API，分别封装在`CloudApis.js`和`fruitmix.js`
+
+  - 云API都是直接访问'https://aws-cn.aidingnan.com/c/v1'
+
+  - 在同一局域网，客户端会直接通过ip访问口袋网盘，否则就通过云的`pipe`访问口袋网盘。其中`reqCloud`方法是实现该功能的适配器
 
 + 多语言
 
@@ -229,3 +251,13 @@ npm run dist-linux
 * package.json : 配置项目依赖及命令
 
 * webpack.config.js : webpack配置文件
+
+### 相关资料
+
++ [Electron 官方文档](https://electronjs.org/docs)
+
++ [Electron 中文教程](https://wizardforcel.gitbooks.io/electron-doc/content/index.html)
+
++ [material-ui 0.20.0版本文档](http://www.material-ui.com/#/components/app-bar)
+
++ [UI设计文档](https://app.zeplin.io/projects)
